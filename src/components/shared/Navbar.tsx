@@ -30,14 +30,14 @@ const Navbar = () => {
 
         <div className="flex items-center gap-5 sm:gap-8">
           <Link
-            href="#"
+            href="/"
             className="hidden text-sm font-bold text-[#b1421c] transition-colors hover:text-[#8f3215] sm:inline sm:text-base"
           >
             Home
           </Link>
 
           <Link
-            href="#"
+            href="/upcoming-events"
             className="text-sm font-bold text-[#211b18] transition-colors hover:text-[#b1421c] sm:text-base"
           >
             Upcoming Events
