@@ -17,9 +17,15 @@ export default function SignUpPage() {
       email: string;
       password: string;
     };
+    console.log(user.photoUrl)
+
+    console.log("User data in SignUpPage:", user); // Log the user data for debugging
 
     const { data, error } = await authClient.signUp.email({
-      ...user,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      image: user.photoUrl || undefined, // don't send an empty string
     });
 
     if (data) {
@@ -28,6 +34,17 @@ export default function SignUpPage() {
     } else {
       console.error("Sign-up error:", error);
       // Handle sign-up error (e.g., display an error message)
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    const { error } = await authClient.signIn.social({
+      provider: "google",
+    });
+
+    if (error) {
+      console.error("Google sign-in failed:", error.message);
+      return;
     }
   };
   return (
@@ -157,6 +174,7 @@ export default function SignUpPage() {
             </div>
 
             <button
+              onClick={handleGoogleSignIn}
               type="button"
               className="flex h-13 w-full items-center justify-center gap-2 rounded-md border border-[#b1421c] px-4 text-base font-bold text-[#b1421c] transition-colors hover:bg-[#fff1e5] focus-visible:ring-4 focus-visible:ring-[#b1421c]/20 focus-visible:outline-none"
             >

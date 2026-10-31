@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,8 +8,7 @@ const inputClassName =
   "mt-2 h-12 w-full rounded-md border border-[#ead6c3] bg-[#fff8ee] px-3 text-base text-[#211b18] outline-none transition placeholder:text-[#81746c] focus:border-[#a63f1c] focus:ring-2 focus:ring-[#a63f1c]/20";
 
 export default function SignInPage() {
-
-    const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const user = Object.fromEntries(formData.entries()) as {
@@ -27,7 +26,18 @@ export default function SignInPage() {
       console.error("Sign-in error:", error);
       // Handle sign-in error (e.g., display an error message)
     }
-}
+  };
+
+  const handleGoogleSignIn = async () => {
+    const { error } = await authClient.signIn.social({
+      provider: "google",
+    });
+
+    if (error) {
+      console.error("Google sign-in failed:", error.message);
+      return;
+    }
+  };
 
   return (
     <main className="bg-[#fff8ee] px-5 py-8 sm:px-8 sm:py-12 lg:px-10 lg:py-16">
@@ -72,7 +82,10 @@ export default function SignInPage() {
 
           <form onSubmit={handleSignIn} className="mt-6">
             <div>
-              <label htmlFor="email" className="text-sm font-bold text-[#211b18]">
+              <label
+                htmlFor="email"
+                className="text-sm font-bold text-[#211b18]"
+              >
                 Email
               </label>
               <input
@@ -120,6 +133,7 @@ export default function SignInPage() {
             </div>
 
             <button
+              onClick={handleGoogleSignIn}
               type="button"
               className="flex h-13 w-full items-center justify-center gap-2 rounded-md border border-[#b1421c] px-4 text-base font-bold text-[#b1421c] transition-colors hover:bg-[#fff1e5] focus-visible:ring-4 focus-visible:ring-[#b1421c]/20 focus-visible:outline-none"
             >
@@ -143,4 +157,4 @@ export default function SignInPage() {
       </div>
     </main>
   );
-    }
+}

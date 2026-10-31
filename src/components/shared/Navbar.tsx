@@ -1,7 +1,12 @@
+"use client";
+import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 
 const Navbar = () => {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  console.log("User data in Navbar:", user); // Log the user data for debugging
   return (
     <nav className="border-t-3 border-[#211b18] bg-white">
       <div className="mx-auto flex min-h-18 w-full max-w-300 items-center justify-between gap-6 px-5 sm:px-8 lg:px-10">
@@ -42,12 +47,36 @@ const Navbar = () => {
           >
             Upcoming Events
           </Link>
-          <Link
-            href="/sign-in"
-            className="rounded-md bg-[#a63f1c] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#8f3215] sm:px-6"
-          >
-            Sign In
-          </Link>
+          {user ? (
+            <div className="flex items-center gap-3">
+              {user.image ? (
+                <Image
+                  src={user.image}
+                  alt={user.name ?? "User avatar"}
+                  width={40}
+                  height={40}
+                  className="size-10 rounded-full object-cover"
+                />
+              ) : (
+                <div className="flex size-10 items-center justify-center rounded-full bg-[#a63f1c] font-bold text-white">
+                  {user.name?.charAt(0).toUpperCase()}
+                </div>
+              )}
+              <button
+                onClick={() => authClient.signOut()}
+                className="text-sm font-bold text-[#211b18] hover:text-[#b1421c] sm:text-base"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/sign-in"
+              className="rounded-md bg-[#a63f1c] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#8f3215] sm:px-6"
+            >
+              Sign In
+            </Link>
+          )}
         </div>
       </div>
     </nav>
