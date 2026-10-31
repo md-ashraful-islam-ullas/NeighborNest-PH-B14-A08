@@ -43,10 +43,10 @@ const Navbar = () => {
             Upcoming Events
           </Link>
           <Link
-            href="#"
+            href="/sign-in"
             className="rounded-md bg-[#a63f1c] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#8f3215] sm:px-6"
           >
-            Login
+            Sign In
           </Link>
         </div>
       </div>
