@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { FormEvent, useState } from "react";
 
 const eventTypes = [
@@ -40,6 +41,8 @@ const CreateEventPage = () => {
     setError("");
     setSubmitted(false);
   };
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -63,7 +66,13 @@ const CreateEventPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(values),
+      body: JSON.stringify({
+        ...values,
+        creator: {
+          name: user?.name,
+          email: user?.email,
+        }
+      }),
     });
 
     if (!res.ok) {
@@ -73,6 +82,7 @@ const CreateEventPage = () => {
     const data = await res.json();
 
     console.log("Event submitted:", data);
+    console.log("User info:", user);
   };
 
   return (

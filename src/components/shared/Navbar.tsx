@@ -118,7 +118,7 @@ const Navbar = () => {
                   Create Event
                 </DropdownMenuItem>
 
-                <DropdownMenuItem className='cursor-pointer' onClick={() => router.push("/manage-events")}>
+                <DropdownMenuItem className='cursor-pointer' onClick={() => router.push("/manage-event")}>
                   <CalendarCogIcon />
                   Manage Event
                 </DropdownMenuItem>
