@@ -3,6 +3,7 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import EditEvents from "@/components/Events/EditEvents";
+import DeleteEvent from "@/components/Events/DeleteEvent";
 
 type ApiEvent = {
   _id: string;
@@ -10,7 +11,8 @@ type ApiEvent = {
   eventType: string;
   date: string;
   location: string;
-  thumbnailUrl?: string;
+  thumbnailUrl: string;
+  description: string;
 };
 
 const categoryStyles: Record<string, { background: string; text: string }> = {
@@ -153,9 +155,10 @@ export default async function ManageMyEventsPage() {
                     {event.location} · {formatDate(event.date)}
                   </p>
                   <span
-                    className={`mt-3 inline-flex rounded-md px-3 py-1 text-xs font-bold ${(
-                      categoryStyles[event.eventType] ?? fallbackCategoryStyle
-                    ).background} ${
+                    className={`mt-3 inline-flex rounded-md px-3 py-1 text-xs font-bold ${
+                      (categoryStyles[event.eventType] ?? fallbackCategoryStyle)
+                        .background
+                    } ${
                       (categoryStyles[event.eventType] ?? fallbackCategoryStyle)
                         .text
                     }`}
@@ -172,21 +175,15 @@ export default async function ManageMyEventsPage() {
                     View
                   </Link>
                   <EditEvents events={event} />
-                  <button
-                    type="button"
-                    className="rounded-md bg-[#b92720] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#991d18] focus-visible:ring-4 focus-visible:ring-[#b92720]/30 focus-visible:outline-none"
-                  >
-                    Delete
-                  </button>
+                  
+                  <DeleteEvent event={event} />
                 </div>
               </article>
             ))}
           </div>
         ) : (
           <div className="mt-8 rounded-md border border-[#e6d3c0] bg-white p-6 text-center shadow-sm sm:mt-9 sm:p-10">
-            <h2 className="text-2xl font-bold text-[#211b18]">
-              No events yet
-            </h2>
+            <h2 className="text-2xl font-bold text-[#211b18]">No events yet</h2>
             <p className="mt-2 text-base text-[#695c54]">
               Create an event to start something good in your neighborhood.
             </p>
