@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import EditEvents from "@/components/Events/EditEvents";
 
 type ApiEvent = {
   _id: string;
@@ -170,12 +171,7 @@ export default async function ManageMyEventsPage() {
                   >
                     View
                   </Link>
-                  <button
-                    type="button"
-                    className="rounded-md border border-[#ad421c] px-4 py-2.5 text-sm font-bold text-[#ad421c] transition-colors hover:bg-[#fff1e5] focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
-                  >
-                    Update
-                  </button>
+                  <EditEvents events={event} />
                   <button
                     type="button"
                     className="rounded-md bg-[#b92720] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#991d18] focus-visible:ring-4 focus-visible:ring-[#b92720]/30 focus-visible:outline-none"

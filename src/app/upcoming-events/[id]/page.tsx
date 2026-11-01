@@ -133,6 +133,7 @@ export default async function EventsDetailsPage({
             </div>
           </section>
 
+
       <JoinEventButtonCard event={event} />
           
         </div>
