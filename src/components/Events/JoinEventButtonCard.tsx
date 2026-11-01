@@ -1,6 +1,7 @@
 'use client';
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export type ApiEvent = {
   _id: string;
@@ -12,11 +13,19 @@ export type ApiEvent = {
   thumbnailUrl: string;
 };
 
+
+
 const JoinEventButtonCard = ({event} : {event: ApiEvent}) => {
+  const router = useRouter();
     const { data: session } = authClient.useSession();
       const user = session?.user;
     
       const handleJoinEvent = async () => {
+        if (!user) {
+          router.push("/sign-in");
+          return;
+        }
+
         const data = {
             ...user,
             ...event,

@@ -3,11 +3,16 @@
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOutIcon, UserIcon, CalendarPlusIcon,
+import {
+  LogOutIcon,
+  UserIcon,
+  CalendarPlusIcon,
   CalendarCogIcon,
-  CalendarCheckIcon, } from "lucide-react";
+  CalendarCheckIcon,
+} from "lucide-react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +25,8 @@ import {
 
 const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
+
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
@@ -34,9 +41,24 @@ const Navbar = () => {
     });
   };
 
+  const navLinkClass = (href: string) => {
+    const isActive = pathname === href;
+
+    return `text-sm font-bold transition-colors sm:text-base ${
+      isActive
+        ? "text-[#b1421c]"
+        : "text-[#211b18] hover:text-[#b1421c]"
+    }`;
+  };
+
+  const dropdownItemClass =
+    "cursor-pointer px-3 py-2.5 text-[15px] font-semibold text-[#29211e] transition-colors data-[highlighted]:bg-[#fff3e8] data-[highlighted]:text-[#b4441b]";
+
   return (
     <nav className="border-t-3 border-[#211b18] bg-white">
       <div className="mx-auto flex min-h-18 w-full max-w-300 items-center justify-between gap-6 px-5 sm:px-8 lg:px-10">
+
+        {/* Logo */}
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2"
@@ -50,6 +72,7 @@ const Navbar = () => {
             className="size-9"
             priority
           />
+
           <Image
             src="/neighbor-nest-text-light.png"
             alt="Neighbor Nest"
@@ -60,23 +83,29 @@ const Navbar = () => {
           />
         </Link>
 
+        {/* Navigation */}
         <div className="flex items-center gap-5 sm:gap-8">
+
           <Link
             href="/"
-            className="hidden text-sm font-bold text-[#b1421c] transition-colors hover:text-[#8f3215] sm:inline sm:text-base"
+            className={`hidden sm:inline ${navLinkClass("/")}`}
+            aria-current={pathname === "/" ? "page" : undefined}
           >
             Home
           </Link>
 
           <Link
             href="/upcoming-events"
-            className="text-sm font-bold text-[#211b18] transition-colors hover:text-[#b1421c] sm:text-base"
+            className={navLinkClass("/upcoming-events")}
+            aria-current={
+              pathname === "/upcoming-events" ? "page" : undefined
+            }
           >
             Upcoming Events
           </Link>
 
+          {/* User Menu */}
           {isPending ? (
-            // Placeholder so the layout doesn't jump / flash "Sign In"
             <div className="size-10 animate-pulse rounded-full bg-gray-200" />
           ) : user ? (
             <DropdownMenu>
@@ -84,7 +113,7 @@ const Navbar = () => {
                 render={
                   <button
                     type="button"
-                    className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#b1421c]"
+                    className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#b1421c] focus-visible:ring-offset-2"
                     aria-label="Open user menu"
                   >
                     <Avatar size="lg">
@@ -100,38 +129,59 @@ const Navbar = () => {
                 }
               />
 
-              <DropdownMenuContent align="end" className='bg-white border border-[#e6d3c0] shadow-md'>
-                {/* Base UI requires Label to live inside a Group */}
+              <DropdownMenuContent
+                align="end"
+                sideOffset={10}
+                className="w-56 border border-[#ead6c3] bg-white p-1.5 shadow-lg"
+              >
                 <DropdownMenuGroup>
-                  <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
+                  <DropdownMenuLabel className="px-3 py-2 text-sm font-bold text-[#29211e]">
+                    {user.name}
+                  </DropdownMenuLabel>
                 </DropdownMenuGroup>
 
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="bg-[#ead6c3]" />
 
-                <DropdownMenuItem className='cursor-pointer' onClick={() => router.push("/profile")}>
-                  <UserIcon />
+                <DropdownMenuItem
+                  className={dropdownItemClass}
+                  onClick={() => router.push("/profile")}
+                >
+                  <UserIcon className="size-4 text-[#b4441b]" />
                   Profile
                 </DropdownMenuItem>
 
-                <DropdownMenuItem className='cursor-pointer' onClick={() => router.push("/create-event")}>
-                  <CalendarPlusIcon />
+                <DropdownMenuItem
+                  className={dropdownItemClass}
+                  onClick={() => router.push("/create-event")}
+                >
+                  <CalendarPlusIcon className="size-4 text-[#b4441b]" />
                   Create Event
                 </DropdownMenuItem>
 
-                <DropdownMenuItem className='cursor-pointer' onClick={() => router.push("/manage-event")}>
-                  <CalendarCogIcon />
+                <DropdownMenuItem
+                  className={dropdownItemClass}
+                  onClick={() => router.push("/manage-event")}
+                >
+                  <CalendarCogIcon className="size-4 text-[#b4441b]" />
                   Manage Event
                 </DropdownMenuItem>
 
-                 <DropdownMenuItem className='cursor-pointer' onClick={() => router.push("/joined-events")}>
-                  <CalendarCheckIcon />
+                <DropdownMenuItem
+                  className={dropdownItemClass}
+                  onClick={() => router.push("/joined-events")}
+                >
+                  <CalendarCheckIcon className="size-4 text-[#b4441b]" />
                   Joined Event
                 </DropdownMenuItem>
 
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="bg-[#ead6c3]" />
 
-                <DropdownMenuItem className='cursor-pointer' variant="destructive" onClick={handleSignOut}>
-                  <LogOutIcon />
+                <DropdownMenuItem
+                  variant="destructive"
+                  className="cursor-pointer px-3 py-2.5 text-[15px] font-semibold transition-colors data-highlighted:bg-red-50"
+                  onClick={handleSignOut}
+                >
+                  <LogOutIcon className="size-4" />
                   Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>

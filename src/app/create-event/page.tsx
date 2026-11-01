@@ -31,6 +31,14 @@ const initialValues: FormValues = {
 const inputClassName =
   "mt-2 w-full rounded-md border border-[#ead6c3] bg-[#fff8ee] px-3 py-3 text-base text-[#211b18] outline-none transition placeholder:text-[#7b7775] focus:border-[#a63f1c] focus:ring-2 focus:ring-[#a63f1c]/20";
 
+const getToday = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
 const CreateEventPage = () => {
   const [values, setValues] = useState(initialValues);
   const [error, setError] = useState("");
@@ -58,6 +66,12 @@ const CreateEventPage = () => {
       return;
     }
 
+    if (values.date < getToday()) {
+      setError("Event date can't be in the past.");
+      setSubmitted(false);
+      return;
+    }
+
     setError("");
     setSubmitted(true);
 
@@ -71,7 +85,7 @@ const CreateEventPage = () => {
         creator: {
           name: user?.name,
           email: user?.email,
-        }
+        },
       }),
     });
 
@@ -166,6 +180,7 @@ const CreateEventPage = () => {
                   id="date"
                   name="date"
                   type="date"
+                  min={getToday()}
                   value={values.date}
                   onChange={(event) => updateValue("date", event.target.value)}
                   className={inputClassName}
