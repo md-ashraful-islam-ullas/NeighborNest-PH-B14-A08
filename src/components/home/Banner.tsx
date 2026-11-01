@@ -8,18 +8,21 @@ const Banner = () => {
       title: "Create an event.",
       action: "Start organizing",
       color: "bg-[#fb8732]",
+      links: '/create-event'
     },
     {
       label: "STEP 2",
       title: "Join one near you.",
       action: "See what’s coming",
       color: "bg-[#ffa844]",
+      links: '/upcoming-events'
     },
     {
       label: "STEP 3",
       title: "Track what you joined.",
       action: "Open my events",
       color: "bg-[#ffb744]",
+      links:  '/joined-events'
     },
   ];
 
@@ -47,13 +50,13 @@ const Banner = () => {
           </p>
           <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
             <Link
-              href="#"
+              href="/upcoming-events"
               className="rounded-md bg-[#ffb744] px-6 py-3 text-sm font-bold text-[#211b18] transition-colors hover:bg-[#ffc765]"
             >
               Browse events
             </Link>
             <Link
-              href="#"
+              href="/create-event"
               className="rounded-md border border-white/80 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10"
             >
               Create an event
@@ -66,7 +69,7 @@ const Banner = () => {
         {steps.map((step) => (
           <Link
             key={step.label}
-            href="#"
+            href={step.links}
             className={`${step.color} flex min-h-55 flex-col justify-between p-7 text-[#211b18] transition-[filter] hover:brightness-105 sm:p-8`}
           >
             <span className="text-xs font-bold tracking-[0.25em]">
