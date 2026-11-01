@@ -1,0 +1,135 @@
+import { auth } from "@/lib/auth";
+import Image from "next/image";
+import Link from "next/link";
+import { headers } from "next/headers";
+
+type ApiEvent = {
+  _id: string;
+  title: string;
+  eventType: string;
+  date: string;
+  location: string;
+  thumbnailUrl: string;
+};
+
+function isApiEvent(value: unknown): value is ApiEvent {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const event = value as Partial<ApiEvent>;
+
+  return (
+    typeof event._id === "string" &&
+    typeof event.title === "string" &&
+    typeof event.eventType === "string" &&
+    typeof event.date === "string" &&
+    typeof event.location === "string" &&
+    typeof event.thumbnailUrl === "string" &&
+    event.thumbnailUrl.length > 0
+  );
+}
+
+function formatDate(date: string) {
+  return new Intl.DateTimeFormat("en-GB", {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(`${date}T00:00:00`));
+}
+
+async function getJoinedEvents(email: string): Promise<ApiEvent[]> {
+  const response = await fetch(
+    `http://localhost:5000/my-joined-events/${encodeURIComponent(email)}`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Unable to load joined events: ${response.status}`);
+  }
+
+  const payload: unknown = await response.json();
+  const events = Array.isArray(payload) ? payload.filter(isApiEvent) : [];
+
+  if (Array.isArray(payload) && events.length !== payload.length) {
+    throw new Error("The joined events response contained invalid events.");
+  }
+
+  if (!Array.isArray(payload)) {
+    throw new Error("The joined events response was not a list.");
+  }
+
+  return events;
+}
+
+export default async function JoinedEventPage() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user.email) {
+    throw new Error("You must be signed in to view joined events.");
+  }
+
+  const events = await getJoinedEvents(session.user.email);
+
+  return (
+    <main className="bg-[#fff7ed] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
+      <div className="mx-auto max-w-300">
+        <h1 className="text-4xl leading-tight font-bold tracking-tight text-[#211b18] sm:text-5xl">
+          Events you joined
+        </h1>
+
+        {events.length > 0 ? (
+          <div className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {events.map((event) => (
+              <article
+                key={event._id}
+                className="overflow-hidden rounded-md border border-[#e6d3c0] bg-white shadow-sm"
+              >
+                <div className="relative h-45 sm:h-46">
+                  <Image
+                    src={event.thumbnailUrl}
+                    alt={event.title}
+                    height={180}
+                    width={300}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+
+                <div className="flex flex-col p-5 sm:p-5.5">
+                  <p className="text-xs font-bold tracking-[0.28em] text-[#b1421c]">
+                    {event.eventType.toUpperCase()}
+                  </p>
+
+                  <h2 className="mt-4 text-2xl leading-tight font-bold text-[#211b18]">
+                    {event.title}
+                  </h2>
+
+                  <div className="mt-2 text-base leading-6 text-[#695c54]">
+                    <p>{event.location}</p>
+                    <p>{formatDate(event.date)}</p>
+                  </div>
+
+                  <Link
+                    href={`/upcoming-events/${event._id}`}
+                    className="mt-5 rounded-md bg-[#a63f1c] px-4 py-3 text-center text-base font-bold text-white transition-colors hover:bg-[#8f3215] focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+                  >
+                    View Event
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-9 rounded-md border border-[#e6d3c0] bg-white p-6 text-base text-[#695c54]">
+            You have not joined any events yet.
+          </p>
+        )}
+      </div>
+    </main>
+  );
+}

@@ -1,3 +1,4 @@
+import JoinEventButtonCard from "@/components/Events/JoinEventButtonCard";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -132,21 +133,8 @@ export default async function EventsDetailsPage({
             </div>
           </section>
 
-          <aside className="rounded-2xl border border-[#e6d3c0] bg-white p-6 sm:p-7 lg:sticky lg:top-6">
-            <h2 className="text-3xl leading-tight font-bold">Ready to help?</h2>
-            <Link
-              href="#"
-              className="mt-5 flex min-h-13 items-center justify-center rounded-md bg-[#a63f1c] px-4 py-3 text-base font-bold text-white transition-colors hover:bg-[#8f3215] focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
-            >
-              Join Event
-            </Link>
-            <p className="mt-4 text-base leading-6 text-[#695c54]">
-              Free to join. Find it later under Joined Events.
-            </p>
-            <div className="mt-5 border-t border-[#e6d3c0] pt-4 text-base text-[#695c54]">
-              Organized by <span className="font-bold text-[#211b18]">demo</span>
-            </div>
-          </aside>
+      <JoinEventButtonCard event={event} />
+          
         </div>
       </div>
     </main>
