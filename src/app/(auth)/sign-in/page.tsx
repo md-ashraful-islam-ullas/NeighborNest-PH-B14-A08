@@ -67,7 +67,7 @@ export default function SignInPage() {
   return (
     <main className="bg-background px-5 py-8 sm:px-8 sm:py-12 lg:px-10 lg:py-16">
       <div className="mx-auto grid w-full max-w-300 gap-6 lg:grid-cols-[0.94fr_1.35fr] lg:gap-9">
-        <section className="relative isolate overflow-hidden rounded-2xl unchanged px-9 py-10 text-primary-foreground sm:px-10 sm:py-12 lg:min-h-154 lg:px-9 lg:py-10">
+        <section className="relative isolate overflow-hidden rounded-2xl bg-[#a63f1c] px-9 py-10 text-white sm:px-10 sm:py-12 lg:min-h-154 lg:px-9 lg:py-10">
           <div className="pointer-events-none absolute -top-20 -right-20 -z-10 size-64 rounded-full border-9 border-[#d77c53]/70 sm:-right-16" />
           <div className="pointer-events-none absolute -top-14 -right-28 -z-10 size-64 rounded-full border-9 border-[#d77c53]/70" />
 
@@ -143,7 +143,7 @@ export default function SignInPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-6 h-13 w-full rounded-md bg-primarypx-4 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+              className="mt-6 flex h-13 w-full items-center justify-center rounded-md bg-[#b1421c] px-4 text-base font-bold text-white transition-colors hover:bg-[#913716] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>

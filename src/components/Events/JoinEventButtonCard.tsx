@@ -6,7 +6,7 @@ import getTokenFromClient from "@/lib/getTokenFromClient";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export type ApiEvent = {
+type ApiEvent = {
   _id: string;
   title: string;
   eventType: string;
@@ -14,12 +14,18 @@ export type ApiEvent = {
   location: string;
   description: string;
   thumbnailUrl: string;
+  creator?: {
+    name?: string | null;
+    email?: string | null;
+  } | null;
 };
 
 const JoinEventButtonCard = ({ event }: { event: ApiEvent }) => {
   const router = useRouter();
   const { data: session } = authClient.useSession();
   const user = session?.user;
+
+  console.log(event);
 
   const [joined, setJoined] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -53,7 +59,6 @@ const JoinEventButtonCard = ({ event }: { event: ApiEvent }) => {
       }
 
       const joinEventResponse = await res.json();
-      console.log(joinEventResponse);
 
       setJoined(true);
     } catch (error) {
@@ -70,10 +75,10 @@ const JoinEventButtonCard = ({ event }: { event: ApiEvent }) => {
       <Button
         onClick={handleJoinEvent}
         disabled={joined || loading}
-        className={`mt-5 flex min-h-13 items-center justify-center rounded-md px-4 py-3 text-base font-bold transition-colors focus-visible:ring-4 focus-visible:outline-none ${
+        className={`mt-5 flex min-h-13 items-center justify-center rounded-md px-4 py-3 text-base font-bold transition-colors focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none ${
           joined
             ? "border border-[#a63f1c] bg-card text-[#a63f1c] hover:bg-card"
-            : "bg-primarytext-primary-foreground hover:bg-primary/90"
+            : "bg-[#b1421c] text-primary-foreground hover:bg-[#913716]"
         }`}
       >
         {loading
@@ -88,7 +93,10 @@ const JoinEventButtonCard = ({ event }: { event: ApiEvent }) => {
       </p>
 
       <div className="mt-5 border-t border-border pt-4 text-base text-muted-foreground">
-        Organized by <span className="font-bold text-foreground">demo</span>
+        Organized by{" "}
+        <span className="font-bold text-foreground">
+          {event.creator?.name || "Neighbor Nest"}
+        </span>
       </div>
     </aside>
   );

@@ -1,9 +1,25 @@
 "use client";
 
-import { ApiEvent } from "@/components/Events/JoinEventButtonCard";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
+
+
+
+type ApiEvent = {
+  _id: string;
+  title: string;
+  eventType: string;
+  date: string;
+  location: string;
+  description: string;
+  thumbnailUrl: string;
+  creator?: {
+    name?: string | null;
+    email?: string | null;
+  } | null;
+};
 
 type Props = {
   manageEvents: ApiEvent[];
@@ -22,6 +38,9 @@ const inputClassName =
 const MyProfilePage = ({ manageEvents, joinedEvents }: Props) => {
   const { data: session, isPending, refetch } = authClient.useSession();
   const user = session?.user;
+
+  console.log('manageEvents:', manageEvents);
+  console.log('joinedEvents:', joinedEvents);
 
   if (isPending) {
     return (
@@ -89,7 +108,10 @@ const ProfileContent = ({
       });
     } else {
       await refetch();
-      setFeedback({ type: "success", message: "Profile updated successfully." });
+      setFeedback({
+        type: "success",
+        message: "Profile updated successfully.",
+      });
     }
 
     setIsSaving(false);
@@ -98,7 +120,7 @@ const ProfileContent = ({
   return (
     <main className="min-h-[calc(100vh-7rem)] bg-background px-5 py-8 sm:px-8 sm:py-12 lg:px-10 lg:py-16">
       <div className="mx-auto grid w-full max-w-300 gap-6 lg:grid-cols-[0.94fr_1.35fr] lg:gap-9">
-        <section className="relative isolate min-h-120 overflow-hidden rounded-2xl unchanged px-9 py-10 text-primary-foreground sm:px-10 sm:py-12 lg:min-h-130 lg:px-9 lg:py-10">
+        <section className="relative isolate min-h-120 overflow-hidden rounded-2xl bg-[#a63f1c] px-9 py-10 text-primary-foreground sm:px-10 sm:py-12 lg:min-h-130 lg:px-9 lg:py-10">
           <div className="pointer-events-none absolute -top-20 -right-20 -z-10 size-64 rounded-full border-9 border-[#d77c53]/70 sm:-right-16" />
 
           <Avatar size="lg" className="size-23 after:hidden sm:size-24">
@@ -109,16 +131,27 @@ const ProfileContent = ({
           </Avatar>
 
           <h1 className="mt-5 text-4xl leading-none font-bold">{user.name}</h1>
-          <p className="mt-2 text-base text-primary-foreground/95">{user.email}</p>
+          <p className="mt-2 text-base text-primary-foreground/95">
+            {user.email}
+          </p>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:gap-4">
-            <div className="rounded-xl bg-[#c26645] px-4 py-4">
-              <p className="text-3xl leading-none font-bold">{manageEvents.length}</p>
-              <p className="mt-1 text-sm font-medium">Events created</p>
+            <div className="rounded-xl bg-[#c26645] px-4 py-4 text-white">
+              <p style={{ color: "white", fontSize: "40px", fontWeight: 900 }}>
+                {manageEvents?.length ?? "N/A"}
+              </p>
+              <p className="mt-1 text-sm font-medium text-white">
+                Events created
+              </p>
             </div>
-            <div className="rounded-xl bg-[#c26645] px-4 py-4">
-              <p className="text-3xl leading-none font-bold">{joinedEvents.length}</p>
-              <p className="mt-1 text-sm font-medium">Events joined</p>
+
+            <div className="rounded-xl bg-[#c26645] px-4 py-4 text-white">
+              <p style={{ color: "white", fontSize: "40px", fontWeight: 900 }}>
+                {joinedEvents?.length ?? "N/A"}
+              </p>
+              <p className="mt-1 text-sm font-medium text-white">
+                Events joined
+              </p>
             </div>
           </div>
         </section>
@@ -136,7 +169,10 @@ const ProfileContent = ({
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-5">
             <div>
-              <label htmlFor="profile-name" className="text-sm font-bold text-foreground">
+              <label
+                htmlFor="profile-name"
+                className="text-sm font-bold text-foreground"
+              >
                 Name
               </label>
               <input
@@ -151,7 +187,10 @@ const ProfileContent = ({
             </div>
 
             <div>
-              <label htmlFor="profile-email" className="text-sm font-bold text-foreground">
+              <label
+                htmlFor="profile-email"
+                className="text-sm font-bold text-foreground"
+              >
                 Email
               </label>
               <input
@@ -164,7 +203,10 @@ const ProfileContent = ({
             </div>
 
             <div>
-              <label htmlFor="profile-photo" className="text-sm font-bold text-foreground">
+              <label
+                htmlFor="profile-photo"
+                className="text-sm font-bold text-foreground"
+              >
                 Photo URL
               </label>
               <input
@@ -196,7 +238,7 @@ const ProfileContent = ({
             <button
               type="submit"
               disabled={isSaving}
-              className="flex h-13 w-full items-center justify-center rounded-md unchanged px-4 py-3 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70"
+              className="flex h-13 w-full items-center justify-center rounded-md bg-[#b1421c] px-4 py-3 text-base font-bold text-primary-foreground transition-colors hover:bg-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isSaving ? "Saving..." : "Save changes"}
             </button>

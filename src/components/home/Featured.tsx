@@ -110,7 +110,7 @@ const Featured = async () => {
                       </span>
                     </div>
 
-                    <div className="flex min-h-48 flex-col p-5">
+                    <div className="flex flex-col p-5">
                       <h3 className="text-xl leading-tight font-bold text-foreground">
                         {event.title}
                       </h3>
@@ -119,7 +119,7 @@ const Featured = async () => {
                       </p>
                       <Link
                         href={`/upcoming-events/${event._id}`}
-                        className="mt-auto flex min-h-12 items-center justify-center rounded-md bg-[#b1421c] px-4 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
+                        className="mt-5 flex min-h-12 items-center justify-center rounded-md bg-[#b1421c] px-4 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
                       >
                         View Event
                       </Link>

@@ -13,8 +13,21 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { ApiEvent } from "./JoinEventButtonCard";
+
 import getTokenFromClient from "@/lib/getTokenFromClient";
+type ApiEvent = {
+  _id: string;
+  title: string;
+  eventType: string;
+  date: string;
+  location: string;
+  description: string;
+  thumbnailUrl: string;
+  creator?: {
+    name?: string | null;
+    email?: string | null;
+  } | null;
+};
 
 const DeleteEvent = ({ event }: { event: ApiEvent }) => {
     const router = useRouter();
@@ -28,7 +41,6 @@ const DeleteEvent = ({ event }: { event: ApiEvent }) => {
             },
         });
         const data = await res.json();
-        console.log("Event deleted:", data);
 
         if (data.deletedCount > 0) {
             router.refresh();

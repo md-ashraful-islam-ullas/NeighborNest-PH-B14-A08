@@ -137,7 +137,7 @@ export default async function JoinedEventPage() {
 
                   <Link
                     href={`/upcoming-events/${event._id}`}
-                    className="mt-5 rounded-md bg-primarypx-4 py-3 text-center text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+                    className="mt-5 flex min-h-12 items-center justify-center rounded-md bg-[#b1421c] px-4 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
                   >
                     View Event
                   </Link>

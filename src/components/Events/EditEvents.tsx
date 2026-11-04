@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { authClient } from "@/lib/auth-client";
 import getTokenFromClient from "@/lib/getTokenFromClient";
+import { useRouter } from "next/navigation";
 
 import { FormEvent, useState } from "react";
 
@@ -20,7 +21,7 @@ const eventTypes = [
 ];
 
 type FormValues = {
-    _id: string;
+  _id: string;
   title: string;
   eventType: string;
   date: string;
@@ -33,7 +34,8 @@ const inputClassName =
   "mt-2 w-full rounded-md border border-[#ead6c3] bg-background px-3 py-3 text-base text-foreground outline-none transition placeholder:text-[#7b7775] focus:border-[#a63f1c] focus:ring-2 focus:ring-ring/20";
 
 const EditEvents = ({ events }: { events: FormValues }) => {
-    console.log("EditEvents component received events:", events);
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
   const [values, setValues] = useState(events);
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -63,11 +65,12 @@ const EditEvents = ({ events }: { events: FormValues }) => {
     setError("");
     setSubmitted(true);
 
-    const { title, eventType, date, location, description, thumbnailUrl } = values;
+    const { title, eventType, date, location, description, thumbnailUrl } =
+      values;
 
     const token = await getTokenFromClient();
     const res = await fetch(`http://localhost:5000/events/${values._id}`, {
-        cache: "no-store",
+      cache: "no-store",
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -75,11 +78,11 @@ const EditEvents = ({ events }: { events: FormValues }) => {
       },
       body: JSON.stringify({
         title,
-    eventType,
-    date,
-    location,
-    description,
-    thumbnailUrl,
+        eventType,
+        date,
+        location,
+        description,
+        thumbnailUrl,
       }),
     });
 
@@ -88,12 +91,11 @@ const EditEvents = ({ events }: { events: FormValues }) => {
     }
 
     const data = await res.json();
-
-    console.log("Event submitted:", data);
-    console.log("User info:", user);
+    setOpen(false);
+    router.refresh();
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <button
           type="button"
@@ -102,7 +104,7 @@ const EditEvents = ({ events }: { events: FormValues }) => {
           Update
         </button>
       </DialogTrigger>
-      <DialogContent className='min-w-200 border-0! outline-none! ring-0! p-0 shadow-none'>
+      <DialogContent className="min-w-200 border-0! outline-none! ring-0! p-0 shadow-none">
         <DialogHeader>
           <DialogDescription>
             <form

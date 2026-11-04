@@ -10,6 +10,10 @@ type ApiEvent = {
   location: string;
   description: string;
   thumbnailUrl: string;
+  creator?: {
+    name?: string | null;
+    email?: string | null;
+  } | null;
 };
 
 function isApiEvent(value: unknown): value is ApiEvent {
@@ -27,10 +31,15 @@ function isApiEvent(value: unknown): value is ApiEvent {
     typeof event.location === "string" &&
     typeof event.description === "string" &&
     typeof event.thumbnailUrl === "string" &&
-    event.thumbnailUrl.length > 0
+    event.thumbnailUrl.length > 0 &&
+    (event.creator == null ||
+      (typeof event.creator === "object" &&
+        (event.creator.name == null ||
+          typeof event.creator.name === "string") &&
+        (event.creator.email == null ||
+          typeof event.creator.email === "string")))
   );
 }
-
 function formatDate(date: string) {
   return new Intl.DateTimeFormat("en-GB", {
     weekday: "short",
@@ -102,7 +111,9 @@ export default async function EventsDetailsPage({
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
               <div className="rounded-lg border border-border bg-card px-4 py-4">
                 <p className="text-sm text-muted-foreground">Date</p>
-                <p className="mt-2 text-base font-bold">{formatDate(event.date)}</p>
+                <p className="mt-2 text-base font-bold">
+                  {formatDate(event.date)}
+                </p>
               </div>
               <div className="rounded-lg border border-border bg-card px-4 py-4">
                 <p className="text-sm text-muted-foreground">Location</p>
@@ -116,14 +127,18 @@ export default async function EventsDetailsPage({
 
             <div className="mt-8 space-y-8">
               <section>
-                <h2 className="text-3xl leading-tight font-bold">About this event</h2>
+                <h2 className="text-3xl leading-tight font-bold">
+                  About this event
+                </h2>
                 <p className="mt-2 max-w-180 text-base leading-7 text-[#3d332e]">
                   {event.description}
                 </p>
               </section>
 
               <section>
-                <h2 className="text-3xl leading-tight font-bold">How it works</h2>
+                <h2 className="text-3xl leading-tight font-bold">
+                  How it works
+                </h2>
                 <ol className="mt-2 list-decimal space-y-2 pl-5 text-base leading-7 text-[#3d332e]">
                   <li>Press Join Event, and log in if asked.</li>
                   <li>Show up at the place and time above.</li>
@@ -133,9 +148,7 @@ export default async function EventsDetailsPage({
             </div>
           </section>
 
-
-      <JoinEventButtonCard event={event} />
-          
+          <JoinEventButtonCard event={event} />
         </div>
       </div>
     </main>
