@@ -61,12 +61,12 @@ const Gallery = () => {
   ];
 
   return (
-    <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+    <section className="bg-card px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
       <div className="mx-auto max-w-300">
-        <p className="text-xs font-bold tracking-[0.3em] text-[#b1421c] sm:text-sm">
+        <p className="text-xs font-bold tracking-[0.3em] text-primary sm:text-sm">
           GALLERY
         </p>
-        <h2 className="mt-5 max-w-150 text-4xl leading-tight font-bold tracking-tight text-[#211b18] sm:text-5xl">
+        <h2 className="mt-5 max-w-150 text-4xl leading-tight font-bold tracking-tight text-foreground sm:text-5xl">
           Moments from our streets.
         </h2>
         <p className="mt-5 text-base text-[#5b4b42] sm:text-lg">
@@ -80,7 +80,7 @@ const Gallery = () => {
           {categories.map((category) => (
             <span
               key={category.label}
-              className={`${category.className} rounded-md px-3.5 py-2 text-xs font-bold text-[#211b18]`}
+              className={`${category.className} rounded-md px-3.5 py-2 text-xs font-bold text-foreground`}
             >
               {category.label}
             </span>
@@ -93,7 +93,7 @@ const Gallery = () => {
               key={event.title}
               href="#"
               aria-label={`${event.title} in ${event.location}`}
-              className="group relative isolate flex min-h-52 overflow-hidden rounded-lg bg-[#d7c6b8] text-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
+              className="group relative isolate flex min-h-52 overflow-hidden rounded-lg bg-[#d7c6b8] text-primary-foreground shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
             >
               <Image
                 src={event.image}
@@ -108,7 +108,7 @@ const Gallery = () => {
                   <h3 className="text-xl leading-tight font-bold">
                     {event.title}
                   </h3>
-                  <p className="mt-1 text-sm font-medium text-white/90">
+                  <p className="mt-1 text-sm font-medium text-primary-foreground/90">
                     {event.location}
                   </p>
                 </div>

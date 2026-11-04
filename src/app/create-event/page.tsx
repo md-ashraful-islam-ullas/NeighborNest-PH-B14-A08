@@ -31,7 +31,7 @@ const initialValues: FormValues = {
 };
 
 const inputClassName =
-  "mt-2 w-full rounded-md border border-[#ead6c3] bg-[#fff8ee] px-3 py-3 text-base text-[#211b18] outline-none transition placeholder:text-[#7b7775] focus:border-[#a63f1c] focus:ring-2 focus:ring-[#a63f1c]/20";
+  "mt-2 w-full rounded-md border border-[#ead6c3] bg-background px-3 py-3 text-base text-foreground outline-none transition placeholder:text-[#7b7775] focus:border-[#a63f1c] focus:ring-2 focus:ring-ring/20";
 
 const getToday = () => {
   const now = new Date();
@@ -105,9 +105,9 @@ const CreateEventPage = () => {
   };
 
   return (
-    <main className="bg-[#fff8ee] px-5 py-10 sm:px-8 sm:py-14 lg:px-10 lg:py-16">
+    <main className="bg-background px-5 py-10 sm:px-8 sm:py-14 lg:px-10 lg:py-16">
       <div className="mx-auto grid w-full max-w-300 gap-8 lg:grid-cols-[0.92fr_1.35fr] lg:items-start lg:gap-9">
-        <section className="relative overflow-hidden rounded-2xl bg-[#ad421c] px-8 py-10 text-white sm:px-9 sm:py-11">
+        <section className="relative overflow-hidden rounded-2xl bg-[#ad421c] px-8 py-10 text-primary-foreground sm:px-9 sm:py-11">
           <div
             aria-hidden="true"
             className="absolute -right-18 -top-20 size-64 rounded-full border-36 border-[#c56a43]/80"
@@ -130,7 +130,7 @@ const CreateEventPage = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="rounded-md border border-[#ead6c3] bg-white px-6 py-8 shadow-sm sm:px-9 sm:py-9"
+          className="rounded-md border border-[#ead6c3] bg-card px-6 py-8 shadow-sm sm:px-9 sm:py-9"
         >
           <fieldset>
             <legend className="text-sm font-bold tracking-[0.28em] text-[#ad421c]">
@@ -251,13 +251,13 @@ const CreateEventPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="mt-5 w-full rounded-md bg-[#ad421c] px-5 py-4 text-base font-bold text-white transition-colors hover:bg-[#8f3215] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-[#ad421c] focus-visible:ring-offset-2"
+            className="mt-5 w-full rounded-md bg-[#ad421c] px-5 py-4 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-[#ad421c] focus-visible:ring-offset-2"
           >
             {loading ? "Publishing..." : "Publish event →"}
           </button>
 
           
-          <p className="mt-4 text-center text-sm text-[#695c54]">
+          <p className="mt-4 text-center text-sm text-muted-foreground">
             Your event appears on the Upcoming Events page right away.
           </p>
         </form>

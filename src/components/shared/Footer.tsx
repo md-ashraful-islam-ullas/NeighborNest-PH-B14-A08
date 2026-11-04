@@ -6,22 +6,22 @@ const socialLinks = [
   {
     label: "Facebook",
     icon: "f",
-    className: "hover:border-[#1877f2] hover:bg-[#1877f2] hover:text-white",
+    className: "hover:border-[#1877f2] hover:bg-[#1877f2] hover:text-primary-foreground",
   },
   {
     label: "Instagram",
     icon: "◎",
-    className: "hover:border-[#e4405f] hover:bg-[#e4405f] hover:text-white",
+    className: "hover:border-[#e4405f] hover:bg-[#e4405f] hover:text-primary-foreground",
   },
   {
     label: "X",
     icon: "𝕏",
-    className: "hover:border-[#111111] hover:bg-[#111111] hover:text-white",
+    className: "hover:border-[#111111] hover:bg-[#111111] hover:text-primary-foreground",
   },
   {
     label: "YouTube",
     icon: "▶",
-    className: "hover:border-[#ff0000] hover:bg-[#ff0000] hover:text-white",
+    className: "hover:border-[#ff0000] hover:bg-[#ff0000] hover:text-primary-foreground",
   },
 ];
 
@@ -35,7 +35,7 @@ const exploreLinks = [
 
 const Footer = () => {
   return (
-    <footer className="border-t-4 border-[#a63f1c] bg-white text-[#211b18]">
+    <footer className="border-t-4 border-[#a63f1c] bg-card text-foreground">
       <div className="mx-auto w-full max-w-300 px-5 py-12 sm:px-8 sm:py-14 lg:px-10 lg:py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.25fr_0.85fr_1.2fr] lg:gap-16">
           <div>
@@ -60,7 +60,7 @@ const Footer = () => {
               />
             </Link>
 
-            <p className="mt-5 max-w-sm text-base leading-relaxed text-[#695c54]">
+            <p className="mt-5 max-w-sm text-base leading-relaxed text-muted-foreground">
               Find, join, and organize community service events in your
               neighborhood. Good starts next door.
             </p>
@@ -87,7 +87,7 @@ const Footer = () => {
                   <li key={link}>
                     <Link
                       href="#"
-                      className="text-base text-[#211b18] transition-colors hover:text-[#b1421c] focus-visible:text-[#b1421c] focus-visible:outline-none"
+                      className="text-base text-foreground transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none"
                     >
                       {link}
                     </Link>
@@ -99,26 +99,26 @@ const Footer = () => {
 
           <div>
             <h2 className="text-xl font-bold">Say hello</h2>
-            <p className="mt-4 max-w-md text-base leading-relaxed text-[#695c54]">
+            <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground">
               Questions, ideas, or an event to suggest? We would love to hear
               from you.
             </p>
             <Link
               href="#"
-              className="mt-5 inline-flex items-center gap-1 font-bold transition-colors hover:text-[#b1421c] focus-visible:text-[#b1421c] focus-visible:outline-none"
+              className="mt-5 inline-flex items-center gap-1 font-bold transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none"
             >
               hello@neighbornest.example
               <ExternalLink aria-hidden="true" className="size-4" />
             </Link>
-            <p className="mt-5 text-base text-[#695c54]">Dhaka, Bangladesh</p>
+            <p className="mt-5 text-base text-muted-foreground">Dhaka, Bangladesh</p>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-[#ead9ca] pt-5 text-sm text-[#695c54] sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-4 border-t border-[#ead9ca] pt-5 text-sm text-muted-foreground sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Neighbor Nest. All rights reserved.</p>
           <Link
             href="#"
-            className="inline-flex items-center gap-1 font-bold text-[#211b18] transition-colors hover:text-[#b1421c] focus-visible:text-[#b1421c] focus-visible:outline-none"
+            className="inline-flex items-center gap-1 font-bold text-foreground transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none"
           >
             Back to top
             <ArrowUp aria-hidden="true" className="size-4" />

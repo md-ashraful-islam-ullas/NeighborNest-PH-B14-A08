@@ -67,11 +67,11 @@ export default async function EventsDetailsPage({
   const event = await getEvent(id);
 
   return (
-    <main className="bg-[#fff8ee] px-5 py-8 text-[#211b18] sm:px-8 sm:py-12 lg:px-10 lg:py-14">
+    <main className="bg-background px-5 py-8 text-foreground sm:px-8 sm:py-12 lg:px-10 lg:py-14">
       <div className="mx-auto max-w-275">
         <Link
           href="/upcoming-events"
-          className="inline-flex items-center gap-1 text-base font-bold text-[#a63f1c] transition-colors hover:text-[#8f3215] focus-visible:ring-2 focus-visible:ring-[#a63f1c]/40 focus-visible:outline-none"
+          className="inline-flex items-center gap-1 text-base font-bold text-[#a63f1c] transition-colors hover:text-[#8f3215] focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
         >
           <span aria-hidden="true">←</span>
           All events
@@ -90,26 +90,26 @@ export default async function EventsDetailsPage({
               />
               <div className="absolute inset-0 bg-linear-to-t from-[#211b18]/65 via-transparent to-transparent" />
               <div className="absolute inset-x-7 bottom-7 sm:inset-x-8 sm:bottom-8">
-                <span className="inline-flex rounded-md bg-white/75 px-3.5 py-2 text-sm font-bold text-[#211b18] backdrop-blur-sm">
+                <span className="inline-flex rounded-md bg-card/75 px-3.5 py-2 text-sm font-bold text-foreground backdrop-blur-sm">
                   {event.eventType}
                 </span>
-                <h1 className="mt-5 max-w-180 text-4xl leading-[1.05] font-bold text-white sm:text-5xl lg:text-5xl">
+                <h1 className="mt-5 max-w-180 text-4xl leading-[1.05] font-bold text-primary-foreground sm:text-5xl lg:text-5xl">
                   {event.title}
                 </h1>
               </div>
             </div>
 
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-lg border border-[#e6d3c0] bg-white px-4 py-4">
-                <p className="text-sm text-[#695c54]">Date</p>
+              <div className="rounded-lg border border-border bg-card px-4 py-4">
+                <p className="text-sm text-muted-foreground">Date</p>
                 <p className="mt-2 text-base font-bold">{formatDate(event.date)}</p>
               </div>
-              <div className="rounded-lg border border-[#e6d3c0] bg-white px-4 py-4">
-                <p className="text-sm text-[#695c54]">Location</p>
+              <div className="rounded-lg border border-border bg-card px-4 py-4">
+                <p className="text-sm text-muted-foreground">Location</p>
                 <p className="mt-2 text-base font-bold">{event.location}</p>
               </div>
-              <div className="rounded-lg border border-[#e6d3c0] bg-white px-4 py-4">
-                <p className="text-sm text-[#695c54]">Entry</p>
+              <div className="rounded-lg border border-border bg-card px-4 py-4">
+                <p className="text-sm text-muted-foreground">Entry</p>
                 <p className="mt-2 text-base font-bold">Free to join</p>
               </div>
             </div>

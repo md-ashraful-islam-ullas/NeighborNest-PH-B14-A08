@@ -61,7 +61,7 @@ const JoinEventButtonCard = ({ event }: { event: ApiEvent }) => {
   };
 
   return (
-    <aside className="rounded-2xl border border-[#e6d3c0] bg-white p-6 sm:p-7 lg:sticky lg:top-6">
+    <aside className="rounded-2xl border border-border bg-card p-6 sm:p-7 lg:sticky lg:top-6">
       <h2 className="text-3xl leading-tight font-bold">Ready to help?</h2>
 
       <Button
@@ -69,8 +69,8 @@ const JoinEventButtonCard = ({ event }: { event: ApiEvent }) => {
         disabled={joined || loading}
         className={`mt-5 flex min-h-13 items-center justify-center rounded-md px-4 py-3 text-base font-bold transition-colors focus-visible:ring-4 focus-visible:outline-none ${
           joined
-            ? "border border-[#a63f1c] bg-white text-[#a63f1c] hover:bg-white"
-            : "bg-[#a63f1c] text-white hover:bg-[#8f3215]"
+            ? "border border-[#a63f1c] bg-card text-[#a63f1c] hover:bg-card"
+            : "bg-primarytext-primary-foreground hover:bg-primary/90"
         }`}
       >
         {loading
@@ -80,12 +80,12 @@ const JoinEventButtonCard = ({ event }: { event: ApiEvent }) => {
             : "Join Event"}
       </Button>
 
-      <p className="mt-4 text-base leading-6 text-[#695c54]">
+      <p className="mt-4 text-base leading-6 text-muted-foreground">
         Free to join. Find it later under Joined Events.
       </p>
 
-      <div className="mt-5 border-t border-[#e6d3c0] pt-4 text-base text-[#695c54]">
-        Organized by <span className="font-bold text-[#211b18]">demo</span>
+      <div className="mt-5 border-t border-border pt-4 text-base text-muted-foreground">
+        Organized by <span className="font-bold text-foreground">demo</span>
       </div>
     </aside>
   );

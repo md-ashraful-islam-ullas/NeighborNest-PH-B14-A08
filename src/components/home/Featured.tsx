@@ -61,10 +61,10 @@ const Featured = async () => {
   return (
     <section className="bg-[#fff7ed] px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
       <div className="mx-auto max-w-300">
-        <p className="text-xs font-bold tracking-[0.3em] text-[#b1421c] sm:text-sm">
+        <p className="text-xs font-bold tracking-[0.3em] text-primary sm:text-sm">
           FEATURED EVENTS
         </p>
-        <h2 className="mt-5 max-w-190 text-4xl leading-[1.05] font-bold tracking-tight text-[#211b18] sm:text-5xl">
+        <h2 className="mt-5 max-w-190 text-4xl leading-[1.05] font-bold tracking-tight text-foreground sm:text-5xl">
           A little help can change an ordinary day.
         </h2>
 
@@ -73,8 +73,8 @@ const Featured = async () => {
           className="mt-8"
         >
           <div className="mb-5 hidden justify-end gap-3 sm:flex">
-            <CarouselPrevious className="static size-12 translate-y-0 rounded-full border-[#e6d9cd] bg-white text-[#211b18] shadow-none" />
-            <CarouselNext className="static size-12 translate-y-0 rounded-full border-[#e6d9cd] bg-white text-[#211b18] shadow-none" />
+            <CarouselPrevious className="static size-12 translate-y-0 rounded-full border-[#e6d9cd] bg-card text-foreground shadow-none" />
+            <CarouselNext className="static size-12 translate-y-0 rounded-full border-[#e6d9cd] bg-card text-foreground shadow-none" />
           </div>
 
           <CarouselContent className="-ml-4">
@@ -86,7 +86,7 @@ const Featured = async () => {
                   key={event._id}
                   className="basis-full pl-4 md:basis-1/2 lg:basis-1/3"
                 >
-                  <article className="overflow-hidden rounded-xl border border-[#e6d9cd] bg-white shadow-sm">
+                  <article className="overflow-hidden rounded-xl border border-[#e6d9cd] bg-card shadow-sm">
                     <div className="relative h-44 overflow-hidden bg-[#d7c6b8] sm:h-48">
                       <Image
                         src={event.thumbnailUrl}
@@ -102,7 +102,7 @@ const Featured = async () => {
                       >
                         {getCategoryStyle(event.eventType).label}
                       </span>
-                      <span className="absolute right-4 top-4 flex min-w-12 flex-col items-center rounded-xl bg-white px-2 py-2 text-[#211b18]">
+                      <span className="absolute right-4 top-4 flex min-w-12 flex-col items-center rounded-xl bg-card px-2 py-2 text-foreground">
                         <strong className="text-xl leading-none">{day}</strong>
                         <span className="mt-1 text-[0.65rem] font-bold uppercase">
                           {month}
@@ -111,7 +111,7 @@ const Featured = async () => {
                     </div>
 
                     <div className="flex min-h-48 flex-col p-5">
-                      <h3 className="text-xl leading-tight font-bold text-[#211b18]">
+                      <h3 className="text-xl leading-tight font-bold text-foreground">
                         {event.title}
                       </h3>
                       <p className="mt-2 text-sm text-[#5b4b42]">
@@ -119,7 +119,7 @@ const Featured = async () => {
                       </p>
                       <Link
                         href={`/upcoming-events/${event._id}`}
-                        className="mt-auto flex min-h-12 items-center justify-center rounded-md bg-[#b1421c] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
+                        className="mt-auto flex min-h-12 items-center justify-center rounded-md bg-[#b1421c] px-4 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
                       >
                         View Event
                       </Link>
@@ -131,14 +131,14 @@ const Featured = async () => {
           </CarouselContent>
 
           <div className="mt-5 flex justify-center gap-3 sm:hidden">
-            <CarouselPrevious className="static size-10 translate-y-0 rounded-full border-[#e6d9cd] bg-white text-[#211b18] shadow-none" />
-            <CarouselNext className="static size-10 translate-y-0 rounded-full border-[#e6d9cd] bg-white text-[#211b18] shadow-none" />
+            <CarouselPrevious className="static size-10 translate-y-0 rounded-full border-[#e6d9cd] bg-card text-foreground shadow-none" />
+            <CarouselNext className="static size-10 translate-y-0 rounded-full border-[#e6d9cd] bg-card text-foreground shadow-none" />
           </div>
         </Carousel>
 
         <Link
           href="/upcoming-events"
-          className="mt-10 block text-center text-sm font-bold text-[#b1421c] transition-colors hover:text-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
+          className="mt-10 block text-center text-sm font-bold text-primary transition-colors hover:text-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
         >
           See all upcoming events →
         </Link>

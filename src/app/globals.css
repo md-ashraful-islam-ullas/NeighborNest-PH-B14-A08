@@ -4,6 +4,49 @@
 
 @custom-variant dark (&:is(.dark *));
 
+:root {
+  --radius: 0.5rem;
+  --background: #fff8ee;
+  --foreground: #211b18;
+  --card: #ffffff;
+  --card-foreground: #211b18;
+  --popover: #ffffff;
+  --popover-foreground: #211b18;
+  --primary: #a63f1c;
+  --primary-foreground: #ffffff;
+  --secondary: #fff1e5;
+  --secondary-foreground: #211b18;
+  --muted: #fff1e5;
+  --muted-foreground: #695c54;
+  --accent: #fff1e5;
+  --accent-foreground: #211b18;
+  --destructive: #dc2626;
+  --border: #e6d3c0;
+  --input: #ead6c3;
+  --ring: #a63f1c;
+}
+
+.dark {
+  --background: #1a1512;
+  --foreground: #f5ebe0;
+  --card: #241d19;
+  --card-foreground: #f5ebe0;
+  --popover: #241d19;
+  --popover-foreground: #f5ebe0;
+  --primary: #d9582c;
+  --primary-foreground: #ffffff;
+  --secondary: #2e2420;
+  --secondary-foreground: #f5ebe0;
+  --muted: #2e2420;
+  --muted-foreground: #b5a69b;
+  --accent: #2e2420;
+  --accent-foreground: #f5ebe0;
+  --destructive: #ef4444;
+  --border: #3a2f28;
+  --input: #3a2f28;
+  --ring: #d9582c;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -26,28 +69,6 @@
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-}
-
-:root {
-  --radius: 0.5rem;
-  --background: #fff8ee;
-  --foreground: #211b18;
-  --card: #ffffff;
-  --card-foreground: #211b18;
-  --popover: #ffffff;
-  --popover-foreground: #211b18;
-  --primary: #a63f1c;
-  --primary-foreground: #ffffff;
-  --secondary: #fff1e5;
-  --secondary-foreground: #211b18;
-  --muted: #fff1e5;
-  --muted-foreground: #695c54;
-  --accent: #fff1e5;
-  --accent-foreground: #211b18;
-  --destructive: #dc2626;
-  --border: #e6d3c0;
-  --input: #ead6c3;
-  --ring: #a63f1c;
 }
 
 @layer base {

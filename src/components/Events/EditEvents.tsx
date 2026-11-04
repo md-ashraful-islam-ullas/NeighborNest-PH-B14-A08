@@ -29,7 +29,7 @@ type FormValues = {
 };
 
 const inputClassName =
-  "mt-2 w-full rounded-md border border-[#ead6c3] bg-[#fff8ee] px-3 py-3 text-base text-[#211b18] outline-none transition placeholder:text-[#7b7775] focus:border-[#a63f1c] focus:ring-2 focus:ring-[#a63f1c]/20";
+  "mt-2 w-full rounded-md border border-[#ead6c3] bg-background px-3 py-3 text-base text-foreground outline-none transition placeholder:text-[#7b7775] focus:border-[#a63f1c] focus:ring-2 focus:ring-ring/20";
 
 const EditEvents = ({ events }: { events: FormValues }) => {
     console.log("EditEvents component received events:", events);
@@ -104,7 +104,7 @@ const EditEvents = ({ events }: { events: FormValues }) => {
           <DialogDescription>
             <form
               onSubmit={handleSubmit}
-              className="rounded-md border border-[#ead6c3] bg-white px-6 py-8 shadow-sm sm:px-9 sm:py-9"
+              className="rounded-md border border-[#ead6c3] bg-card px-6 py-8 shadow-sm sm:px-9 sm:py-9"
             >
               <fieldset>
                 <legend className="text-sm font-bold tracking-[0.28em] text-[#ad421c]">
@@ -243,11 +243,11 @@ const EditEvents = ({ events }: { events: FormValues }) => {
 
               <button
                 type="submit"
-                className="mt-5 w-full rounded-md bg-[#ad421c] px-5 py-4 text-base font-bold text-white transition-colors hover:bg-[#8f3215] focus-visible:ring-2 focus-visible:ring-[#ad421c] focus-visible:ring-offset-2"
+                className="mt-5 w-full rounded-md bg-[#ad421c] px-5 py-4 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-[#ad421c] focus-visible:ring-offset-2"
               >
                 Publish event →
               </button>
-              <p className="mt-4 text-center text-sm text-[#695c54]">
+              <p className="mt-4 text-center text-sm text-muted-foreground">
                 Your event appears on the Upcoming Events page right away.
               </p>
             </form>

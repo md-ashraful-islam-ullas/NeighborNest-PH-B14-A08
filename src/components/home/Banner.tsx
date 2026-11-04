@@ -28,7 +28,7 @@ const Banner = () => {
 
   return (
     <main className="overflow-hidden bg-[#fff7ed]">
-      <section className="relative isolate min-h-135 text-white">
+      <section className="relative isolate min-h-135 text-primary-foreground">
         <Image
           src="/banner.jpg"
           alt=""
@@ -44,20 +44,20 @@ const Banner = () => {
           <h1 className="max-w-180 text-5xl leading-[0.98] font-bold tracking-tight sm:text-6xl lg:text-7xl">
             Good starts next door.
           </h1>
-          <p className="mt-6 max-w-170 text-base leading-7 text-white/90 sm:text-lg">
+          <p className="mt-6 max-w-170 text-base leading-7 text-primary-foreground/90 sm:text-lg">
             Find a neighborhood event, show up, and see what a few hours can
             change.
           </p>
           <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
             <Link
               href="/upcoming-events"
-              className="rounded-md bg-[#ffb744] px-6 py-3 text-sm font-bold text-[#211b18] transition-colors hover:bg-[#ffc765]"
+              className="rounded-md bg-[#ffb744] px-6 py-3 text-sm font-bold text-foreground transition-colors hover:bg-[#ffc765]"
             >
               Browse events
             </Link>
             <Link
               href="/create-event"
-              className="rounded-md border border-white/80 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10"
+              className="rounded-md border border-white/80 px-6 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-card/10"
             >
               Create an event
             </Link>
@@ -70,7 +70,7 @@ const Banner = () => {
           <Link
             key={step.label}
             href={step.links}
-            className={`${step.color} flex min-h-55 flex-col justify-between p-7 text-[#211b18] transition-[filter] hover:brightness-105 sm:p-8`}
+            className={`${step.color} flex min-h-55 flex-col justify-between p-7 text-foreground transition-[filter] hover:brightness-105 sm:p-8`}
           >
             <span className="text-xs font-bold tracking-[0.25em]">
               {step.label}

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const inputClassName =
-  "mt-2 h-12 w-full rounded-md border border-[#ead6c3] bg-[#fff8ee] px-3 text-base text-[#211b18] outline-none transition placeholder:text-[#81746c] focus:border-[#a63f1c] focus:ring-2 focus:ring-[#a63f1c]/20";
+  "mt-2 h-12 w-full rounded-md border border-[#ead6c3] bg-background px-3 text-base text-foreground outline-none transition placeholder:text-[#81746c] focus:border-[#a63f1c] focus:ring-2 focus:ring-ring/20";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -92,10 +92,10 @@ export default function SignUpPage() {
   };
 
   return (
-    <main className="bg-[#fff8ee] px-5 py-8 sm:px-8 sm:py-12 lg:px-10 lg:py-16">
+    <main className="bg-background px-5 py-8 sm:px-8 sm:py-12 lg:px-10 lg:py-16">
       <div className="mx-auto grid w-full max-w-300 gap-6 lg:grid-cols-[0.94fr_1.35fr] lg:gap-9">
 
-        <section className="relative isolate overflow-hidden rounded-2xl bg-[#ad421b] px-9 py-10 text-white sm:px-10 sm:py-12 lg:min-h-176 lg:px-9 lg:py-10">
+        <section className="relative isolate overflow-hidden rounded-2xl unchanged px-9 py-10 text-primary-foreground sm:px-10 sm:py-12 lg:min-h-176 lg:px-9 lg:py-10">
           <div className="pointer-events-none absolute -top-20 -right-20 -z-10 size-64 rounded-full border-9 border-[#d77c53]/70 sm:-right-16" />
           <div className="pointer-events-none absolute -top-14 -right-28 -z-10 size-64 rounded-full border-9 border-[#d77c53]/70" />
 
@@ -110,7 +110,7 @@ export default function SignUpPage() {
             Join your neighbors.
           </h1>
 
-          <p className="mt-3 max-w-md text-base leading-7 text-white/95 sm:text-lg">
+          <p className="mt-3 max-w-md text-base leading-7 text-primary-foreground/95 sm:text-lg">
             Create an account to organize and join events near you.
           </p>
 
@@ -121,16 +121,16 @@ export default function SignUpPage() {
           </ul>
         </section>
 
-        <section className="rounded-md border border-[#e6d3c0] bg-white px-6 py-8 sm:px-9 sm:py-10 lg:px-9 lg:py-9">
-          <p className="text-xs font-bold tracking-[0.3em] text-[#b1421c] sm:text-sm">
+        <section className="rounded-md border border-border bg-card px-6 py-8 sm:px-9 sm:py-10 lg:px-9 lg:py-9">
+          <p className="text-xs font-bold tracking-[0.3em] text-primary sm:text-sm">
             REGISTER
           </p>
 
-          <h2 className="mt-4 text-4xl leading-tight font-bold tracking-tight text-[#211b18] sm:text-5xl">
+          <h2 className="mt-4 text-4xl leading-tight font-bold tracking-tight text-foreground sm:text-5xl">
             Create your account
           </h2>
 
-          <p className="mt-1 text-base text-[#695c54] sm:text-lg">
+          <p className="mt-1 text-base text-muted-foreground sm:text-lg">
             It only takes a minute.
           </p>
 
@@ -139,7 +139,7 @@ export default function SignUpPage() {
               <div>
                 <label
                   htmlFor="name"
-                  className="text-sm font-bold text-[#211b18]"
+                  className="text-sm font-bold text-foreground"
                 >
                   Name
                 </label>
@@ -158,7 +158,7 @@ export default function SignUpPage() {
               <div>
                 <label
                   htmlFor="photo-url"
-                  className="text-sm font-bold text-[#211b18]"
+                  className="text-sm font-bold text-foreground"
                 >
                   Photo URL
                 </label>
@@ -176,7 +176,7 @@ export default function SignUpPage() {
             <div className="mt-5">
               <label
                 htmlFor="email"
-                className="text-sm font-bold text-[#211b18]"
+                className="text-sm font-bold text-foreground"
               >
                 Email
               </label>
@@ -195,7 +195,7 @@ export default function SignUpPage() {
             <div className="mt-5">
               <label
                 htmlFor="password"
-                className="text-sm font-bold text-[#211b18]"
+                className="text-sm font-bold text-foreground"
               >
                 Password
               </label>
@@ -209,7 +209,7 @@ export default function SignUpPage() {
                 className={inputClassName}
               />
 
-              <p className="mt-2 text-xs leading-5 text-[#695c54] sm:text-sm">
+              <p className="mt-2 text-xs leading-5 text-muted-foreground sm:text-sm">
                 Use an uppercase letter, a lowercase letter, and at least 6
                 characters.
               </p>
@@ -218,12 +218,12 @@ export default function SignUpPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-6 h-13 w-full rounded-md bg-[#a63f1c] px-4 text-base font-bold text-white transition-colors hover:bg-[#8f3215] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+              className="mt-6 h-13 w-full rounded-md bg-primarypx-4 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
             >
               {loading ? "Creating account..." : "Create account"}
             </button>
 
-            <div className="my-5 flex items-center gap-3 text-sm text-[#695c54]">
+            <div className="my-5 flex items-center gap-3 text-sm text-muted-foreground">
               <span className="h-px flex-1 bg-[#e6d3c0]" />
               <span>or</span>
               <span className="h-px flex-1 bg-[#e6d3c0]" />
@@ -232,7 +232,7 @@ export default function SignUpPage() {
             <button
               onClick={handleGoogleSignIn}
               type="button"
-              className="flex h-13 w-full items-center justify-center gap-2 rounded-md border border-[#b1421c] px-4 text-base font-bold text-[#b1421c] transition-colors hover:bg-[#fff1e5] focus-visible:ring-4 focus-visible:ring-[#b1421c]/20 focus-visible:outline-none"
+              className="flex h-13 w-full items-center justify-center gap-2 rounded-md border border-[#b1421c] px-4 text-base font-bold text-primary transition-colors hover:bg-[#fff1e5] focus-visible:ring-4 focus-visible:ring-[#b1421c]/20 focus-visible:outline-none"
             >
               <span className="text-xl leading-none" aria-hidden="true">
                 G
@@ -240,7 +240,7 @@ export default function SignUpPage() {
               Continue with Google
             </button>
 
-            <p className="mt-4 text-center text-base text-[#695c54]">
+            <p className="mt-4 text-center text-base text-muted-foreground">
               Already have an account?{" "}
               <Link
                 href="/sign-in"

@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/shared/theme-provider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -25,20 +26,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={cn(dosis.className, "font-sans", geist.variable)}
     >
       <body>
-        <Navbar />
-        {children}
-        <Toaster
-          style={
-            {
-              "--normal-bg": "#ffffff",
-              "--normal-text": "#211b18",
-              "--normal-border": "#e6d3c0",
-              "--success-bg": "#ffffff",
-              "--error-bg": "#ffffff",
-            } as React.CSSProperties
-          }
-        />
-        <Footer />
+        <ThemeProvider>
+          <Navbar />
+          {children}
+          <Toaster />
+          <Footer />{" "}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -85,7 +85,7 @@ export default async function JoinedEventPage() {
   return (
     <main className="bg-[#fff7ed] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
       <div className="mx-auto max-w-300">
-        <h1 className="text-4xl leading-tight font-bold tracking-tight text-[#211b18] sm:text-5xl">
+        <h1 className="text-4xl leading-tight font-bold tracking-tight text-foreground sm:text-5xl">
           Events you joined
         </h1>
 
@@ -94,7 +94,7 @@ export default async function JoinedEventPage() {
             {events.map((event) => (
               <article
                 key={event._id}
-                className="overflow-hidden rounded-md border border-[#e6d3c0] bg-white shadow-sm"
+                className="overflow-hidden rounded-md border border-border bg-card shadow-sm"
               >
                 <div className="relative h-45 sm:h-46">
                   {event.thumbnailUrl ? (
@@ -109,7 +109,7 @@ export default async function JoinedEventPage() {
                     <div
                       className={`flex h-full items-end bg-linear-to-br ${
                         categoryColors[event.eventType] ?? fallbackColor
-                      } p-4 text-white`}
+                      } p-4 text-primary-foreground`}
                     >
                       <p className="text-base font-bold">{event.eventType}</p>
                     </div>
@@ -117,22 +117,22 @@ export default async function JoinedEventPage() {
                 </div>
 
                 <div className="flex flex-col p-5 sm:p-5.5">
-                  <p className="text-xs font-bold tracking-[0.28em] text-[#b1421c]">
+                  <p className="text-xs font-bold tracking-[0.28em] text-primary">
                     {event.eventType.toUpperCase()}
                   </p>
 
-                  <h2 className="mt-4 text-2xl leading-tight font-bold text-[#211b18]">
+                  <h2 className="mt-4 text-2xl leading-tight font-bold text-foreground">
                     {event.title}
                   </h2>
 
-                  <div className="mt-2 text-base leading-6 text-[#695c54]">
+                  <div className="mt-2 text-base leading-6 text-muted-foreground">
                     <p>{event.location}</p>
                     <p>{formatDate(event.date)}</p>
                   </div>
 
                   <Link
                     href={`/upcoming-events/${event._id}`}
-                    className="mt-5 rounded-md bg-[#a63f1c] px-4 py-3 text-center text-base font-bold text-white transition-colors hover:bg-[#8f3215] focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+                    className="mt-5 rounded-md bg-primarypx-4 py-3 text-center text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
                   >
                     View Event
                   </Link>
@@ -141,7 +141,7 @@ export default async function JoinedEventPage() {
             ))}
           </div>
         ) : (
-          <p className="mt-9 rounded-md border border-[#e6d3c0] bg-white p-6 text-base text-[#695c54]">
+          <p className="mt-9 rounded-md border border-border bg-card p-6 text-base text-muted-foreground">
             You have not joined any events yet.
           </p>
         )}

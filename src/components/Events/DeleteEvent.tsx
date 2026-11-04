@@ -35,14 +35,14 @@ const DeleteEvent = ({ event }: { event: ApiEvent }) => {
         render={
           <button
             type="button"
-            className="rounded-md bg-[#b92720] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#991d18] focus-visible:ring-4 focus-visible:ring-[#b92720]/30 focus-visible:outline-none"
+            className="rounded-md bg-[#b92720] px-4 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-[#991d18] focus-visible:ring-4 focus-visible:ring-[#b92720]/30 focus-visible:outline-none"
           >
             Delete
           </button>
         }
       />
       <AlertDialogContent
-        className="border border-[#ead6c3] bg-white shadow-xl"
+        className="border border-[#ead6c3] bg-card shadow-xl"
         size="sm"
       >
         <AlertDialogHeader>
@@ -61,11 +61,11 @@ const DeleteEvent = ({ event }: { event: ApiEvent }) => {
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel className="border-[#ead6c3] bg-white text-[#29211e] hover:bg-[#fff7ed] hover:text-[#b4441b]">
+          <AlertDialogCancel className="border-[#ead6c3] bg-card text-[#29211e] hover:bg-[#fff7ed] hover:text-[#b4441b]">
             Cancel
           </AlertDialogCancel>
 
-          <AlertDialogAction onClick={handleDeleteEvent} className="bg-[#b92c24] text-white hover:bg-[#a3221c]">
+          <AlertDialogAction onClick={handleDeleteEvent} className="bg-[#b92c24] text-primary-foreground hover:bg-[#a3221c]">
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>

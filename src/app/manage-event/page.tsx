@@ -16,15 +16,15 @@ type ApiEvent = {
 };
 
 const categoryStyles: Record<string, { background: string; text: string }> = {
-  Donation: { background: "bg-[#ffc96f]", text: "text-[#211b18]" },
-  Plantation: { background: "bg-[#b9db8d]", text: "text-[#211b18]" },
-  Cleanup: { background: "bg-[#b8d7f6]", text: "text-[#211b18]" },
-  Education: { background: "bg-[#f0c0af]", text: "text-[#211b18]" },
+  Donation: { background: "bg-[#ffc96f]", text: "text-foreground" },
+  Plantation: { background: "bg-[#b9db8d]", text: "text-foreground" },
+  Cleanup: { background: "bg-[#b8d7f6]", text: "text-foreground" },
+  Education: { background: "bg-[#f0c0af]", text: "text-foreground" },
 };
 
 const fallbackCategoryStyle = {
   background: "bg-[#ead6c3]",
-  text: "text-[#211b18]",
+  text: "text-foreground",
 };
 
 function isApiEvent(value: unknown): value is ApiEvent {
@@ -122,17 +122,17 @@ export default async function ManageMyEventsPage() {
       <div className="mx-auto max-w-300">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-bold tracking-[0.3em] text-[#b1421c] sm:text-sm">
+            <p className="text-xs font-bold tracking-[0.3em] text-primary sm:text-sm">
               YOUR EVENTS
             </p>
-            <h1 className="mt-4 text-4xl leading-tight font-bold tracking-tight text-[#211b18] sm:text-5xl">
+            <h1 className="mt-4 text-4xl leading-tight font-bold tracking-tight text-foreground sm:text-5xl">
               Manage your events
             </h1>
           </div>
 
           <Link
             href="/create-event"
-            className="inline-flex w-fit items-center justify-center rounded-md bg-[#ad421c] px-5 py-3 text-base font-bold text-white transition-colors hover:bg-[#8f3215] focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+            className="inline-flex w-fit items-center justify-center rounded-md bg-[#ad421c] px-5 py-3 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
           >
             + New event
           </Link>
@@ -143,15 +143,15 @@ export default async function ManageMyEventsPage() {
             {events.map((event) => (
               <article
                 key={event._id}
-                className="flex flex-col gap-5 rounded-md border border-[#e6d3c0] bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:gap-6 sm:px-5 sm:py-6"
+                className="flex flex-col gap-5 rounded-md border border-border bg-card p-5 shadow-sm sm:flex-row sm:items-center sm:gap-6 sm:px-5 sm:py-6"
               >
                 <EventThumbnail event={event} />
 
                 <div className="min-w-0 flex-1">
-                  <h2 className="truncate text-lg font-bold text-[#211b18] sm:text-xl">
+                  <h2 className="truncate text-lg font-bold text-foreground sm:text-xl">
                     {event.title}
                   </h2>
-                  <p className="mt-1 text-sm text-[#695c54] sm:text-base">
+                  <p className="mt-1 text-sm text-muted-foreground sm:text-base">
                     {event.location} · {formatDate(event.date)}
                   </p>
                   <span
@@ -182,14 +182,14 @@ export default async function ManageMyEventsPage() {
             ))}
           </div>
         ) : (
-          <div className="mt-8 rounded-md border border-[#e6d3c0] bg-white p-6 text-center shadow-sm sm:mt-9 sm:p-10">
-            <h2 className="text-2xl font-bold text-[#211b18]">No events yet</h2>
-            <p className="mt-2 text-base text-[#695c54]">
+          <div className="mt-8 rounded-md border border-border bg-card p-6 text-center shadow-sm sm:mt-9 sm:p-10">
+            <h2 className="text-2xl font-bold text-foreground">No events yet</h2>
+            <p className="mt-2 text-base text-muted-foreground">
               Create an event to start something good in your neighborhood.
             </p>
             <Link
               href="/create-event"
-              className="mt-5 inline-flex rounded-md bg-[#ad421c] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#8f3215] focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+              className="mt-5 inline-flex rounded-md bg-[#ad421c] px-5 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
             >
               Create your first event
             </Link>
