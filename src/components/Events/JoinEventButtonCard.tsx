@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
+import getTokenFromClient from "@/lib/getTokenFromClient";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -37,10 +38,12 @@ const JoinEventButtonCard = ({ event }: { event: ApiEvent }) => {
         ...event,
       };
 
+      const token = await getTokenFromClient();
       const res = await fetch("http://localhost:5000/join-event", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       });

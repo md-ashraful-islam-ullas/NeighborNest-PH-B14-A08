@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import getTokenFromClient from "@/lib/getTokenFromClient";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
@@ -76,10 +77,10 @@ const CreateEventPage = () => {
 
     try {
       setLoading(true);
-
+      const token = await getTokenFromClient();
       const res = await fetch("http://localhost:5000/create-event", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", authorization: `Bearer ${token}` },
         body: JSON.stringify({
           ...values,
           creator: {

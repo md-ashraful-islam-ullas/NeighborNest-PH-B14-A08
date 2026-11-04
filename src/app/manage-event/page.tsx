@@ -1,9 +1,11 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import EditEvents from "@/components/Events/EditEvents";
 import DeleteEvent from "@/components/Events/DeleteEvent";
+import getTokenFromServer from "@/lib/getTokenFromServer";
 
 type ApiEvent = {
   _id: string;
@@ -54,9 +56,10 @@ function formatDate(date: string) {
 }
 
 async function getMyEvents(email: string): Promise<ApiEvent[]> {
+  const token = await getTokenFromServer();
   const response = await fetch(
     `http://localhost:5000/my-events/${encodeURIComponent(email)}`,
-    { cache: "no-store" },
+    { cache: "no-store", headers: { authorization: `Bearer ${token}` } },
   );
 
   if (!response.ok) {

@@ -8,6 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { authClient } from "@/lib/auth-client";
+import getTokenFromClient from "@/lib/getTokenFromClient";
 
 import { FormEvent, useState } from "react";
 
@@ -64,11 +65,13 @@ const EditEvents = ({ events }: { events: FormValues }) => {
 
     const { title, eventType, date, location, description, thumbnailUrl } = values;
 
+    const token = await getTokenFromClient();
     const res = await fetch(`http://localhost:5000/events/${values._id}`, {
         cache: "no-store",
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         title,

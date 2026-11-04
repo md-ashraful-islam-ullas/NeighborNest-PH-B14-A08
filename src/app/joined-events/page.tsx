@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import getTokenFromServer from "@/lib/getTokenFromServer";
 
 type ApiEvent = {
   _id: string;
@@ -48,10 +49,14 @@ function formatDate(date: string) {
 }
 
 async function getJoinedEvents(email: string): Promise<ApiEvent[]> {
+  const token = await getTokenFromServer();
   const response = await fetch(
     `http://localhost:5000/my-joined-events/${encodeURIComponent(email)}`,
     {
       cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     },
   );
 

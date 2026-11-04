@@ -14,13 +14,18 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { ApiEvent } from "./JoinEventButtonCard";
+import getTokenFromClient from "@/lib/getTokenFromClient";
 
 const DeleteEvent = ({ event }: { event: ApiEvent }) => {
     const router = useRouter();
 
     const handleDeleteEvent = async () => {
+        const token = await getTokenFromClient();
         const res = await fetch(`http://localhost:5000/events/${event._id}`, {
             method: "DELETE",
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
         });
         const data = await res.json();
         console.log("Event deleted:", data);
