@@ -8,6 +8,7 @@ const db = client.db("NeighborNest");
 export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
+    autoLogin: false,
   },
   socialProviders: {
     google: {

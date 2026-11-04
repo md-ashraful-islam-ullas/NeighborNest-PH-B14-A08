@@ -1,41 +1,66 @@
 "use client";
+
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const inputClassName =
   "mt-2 h-12 w-full rounded-md border border-[#ead6c3] bg-[#fff8ee] px-3 text-base text-[#211b18] outline-none transition placeholder:text-[#81746c] focus:border-[#a63f1c] focus:ring-2 focus:ring-[#a63f1c]/20";
 
 export default function SignInPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const formData = new FormData(event.currentTarget);
     const user = Object.fromEntries(formData.entries()) as {
       email: string;
       password: string;
     };
-    const { data, error } = await authClient.signIn.email({
-      ...user,
-    });
 
-    if (data) {
-      redirect("/"); // Redirect to the home page after successful sign-in
-      // Handle successful sign-in (e.g., redirect to the home page)
-    } else {
+    try {
+      setLoading(true);
+
+      const { data, error } = await authClient.signIn.email({
+        email: user.email,
+        password: user.password,
+      });
+
+      if (error) {
+        toast.error(error.message || "Invalid email or password.");
+        return;
+      }
+
+      if (data) {
+        toast.success("Signed in successfully!");
+        router.push("/");
+        router.refresh();
+      }
+    } catch (error) {
       console.error("Sign-in error:", error);
-      // Handle sign-in error (e.g., display an error message)
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
-    const { error } = await authClient.signIn.social({
-      provider: "google",
-    });
+    try {
+      const { error } = await authClient.signIn.social({
+        provider: "google",
+      });
 
-    if (error) {
-      console.error("Google sign-in failed:", error.message);
-      return;
+      if (error) {
+        toast.error(error.message || "Google sign-in failed.");
+      }
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
@@ -117,9 +142,10 @@ export default function SignInPage() {
 
             <button
               type="submit"
-              className="mt-6 h-13 w-full rounded-md bg-[#a63f1c] px-4 text-base font-bold text-white transition-colors hover:bg-[#8f3215] focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+              disabled={loading}
+              className="mt-6 h-13 w-full rounded-md bg-[#a63f1c] px-4 text-base font-bold text-white transition-colors hover:bg-[#8f3215] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
             >
-              Sign In
+              {loading ? "Signing in..." : "Sign In"}
             </button>
 
             <p className="mt-4 text-center text-sm text-[#695c54]">

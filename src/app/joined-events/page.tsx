@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 type ApiEvent = {
   _id: string;
@@ -9,8 +10,17 @@ type ApiEvent = {
   eventType: string;
   date: string;
   location: string;
-  thumbnailUrl: string;
+  thumbnailUrl?: string;
 };
+
+const categoryColors: Record<string, string> = {
+  Donation: "from-[#f9822c] to-[#b4451b]",
+  Plantation: "from-[#6d9148] to-[#38552f]",
+  Cleanup: "from-[#5e83ad] to-[#315271]",
+  Education: "from-[#5a4c44] to-[#302923]",
+};
+
+const fallbackColor = "from-[#f9822c] to-[#b4451b]";
 
 function isApiEvent(value: unknown): value is ApiEvent {
   if (!value || typeof value !== "object") {
@@ -24,9 +34,7 @@ function isApiEvent(value: unknown): value is ApiEvent {
     typeof event.title === "string" &&
     typeof event.eventType === "string" &&
     typeof event.date === "string" &&
-    typeof event.location === "string" &&
-    typeof event.thumbnailUrl === "string" &&
-    event.thumbnailUrl.length > 0
+    typeof event.location === "string"
   );
 }
 
@@ -52,17 +60,15 @@ async function getJoinedEvents(email: string): Promise<ApiEvent[]> {
   }
 
   const payload: unknown = await response.json();
-  const events = Array.isArray(payload) ? payload.filter(isApiEvent) : [];
-
-  if (Array.isArray(payload) && events.length !== payload.length) {
-    throw new Error("The joined events response contained invalid events.");
-  }
 
   if (!Array.isArray(payload)) {
     throw new Error("The joined events response was not a list.");
   }
 
-  return events;
+  // Sort by event date, soonest first (dates are YYYY-MM-DD strings)
+  return payload
+    .filter(isApiEvent)
+    .sort((a, b) => a.date.localeCompare(b.date));
 }
 
 export default async function JoinedEventPage() {
@@ -71,7 +77,7 @@ export default async function JoinedEventPage() {
   });
 
   if (!session?.user.email) {
-    throw new Error("You must be signed in to view joined events.");
+    redirect("/sign-in");
   }
 
   const events = await getJoinedEvents(session.user.email);
@@ -91,13 +97,23 @@ export default async function JoinedEventPage() {
                 className="overflow-hidden rounded-md border border-[#e6d3c0] bg-white shadow-sm"
               >
                 <div className="relative h-45 sm:h-46">
-                  <Image
-                    src={event.thumbnailUrl}
-                    alt={event.title}
-                    height={180}
-                    width={300}
-                    className="h-full w-full object-cover"
-                  />
+                  {event.thumbnailUrl ? (
+                    <Image
+                      src={event.thumbnailUrl}
+                      alt={event.title}
+                      height={180}
+                      width={300}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div
+                      className={`flex h-full items-end bg-linear-to-br ${
+                        categoryColors[event.eventType] ?? fallbackColor
+                      } p-4 text-white`}
+                    >
+                      <p className="text-base font-bold">{event.eventType}</p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-col p-5 sm:p-5.5">

@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 
@@ -47,6 +46,13 @@ function isApiEvent(value: unknown): value is ApiEvent {
   );
 }
 
+// Today's date as YYYY-MM-DD in Dhaka time, regardless of server timezone
+function getToday() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Dhaka",
+  }).format(new Date());
+}
+
 function formatDate(date: string) {
   return new Intl.DateTimeFormat("en-GB", {
     weekday: "short",
@@ -66,11 +72,11 @@ async function getEvents(): Promise<EventCard[]> {
   }
 
   const payload: unknown = await response.json();
-  const events = Array.isArray(payload) ? payload.filter(isApiEvent) : [];
+  const today = getToday();
 
-  if (events.length === 0) {
-    throw new Error("The events response did not contain any valid events.");
-  }
+  const events = (Array.isArray(payload) ? payload.filter(isApiEvent) : [])
+    .filter((event) => event.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date));
 
   return events.map((event) => ({
     id: event._id,
@@ -97,58 +103,69 @@ export default async function AllEventsPage() {
           Find your next good deed.
         </h1>
 
-        <div className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {events.map((event) => (
-            <article
-              key={event.id}
-              className="overflow-hidden rounded-md border border-[#e6d3c0] bg-white shadow-sm"
+        {events.length === 0 ? (
+          <p className="mt-9 text-lg text-[#695c54]">
+            No upcoming events right now. Check back soon or{" "}
+            <Link
+              href="/create-event"
+              className="font-bold text-[#a63f1c] underline"
             >
-              {/* Event Thumbnail */}
-              <div className="relative h-45 sm:h-46">
-                {event.thumbnailUrl ? (
-                  <Image
-                    src={event.thumbnailUrl}
-                    alt={event.title}
-                    height={180}
-                    width={300}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <div
-                    className={`flex h-full items-end bg-linear-to-br ${event.color} p-4 text-white`}
-                  >
-                    <p className="text-base font-bold">
-                      {event.category}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Event Information */}
-              <div className="flex flex-col p-5 sm:p-5.5">
-                <p className="text-xs font-bold tracking-[0.28em] text-[#b1421c]">
-                  {event.category.toUpperCase()}
-                </p>
-
-                <h2 className="mt-4 text-2xl leading-tight font-bold text-[#211b18]">
-                  {event.title}
-                </h2>
-
-                <div className="mt-2 text-base leading-6 text-[#695c54]">
-                  <p>{event.location}</p>
-                  <p>{event.date}</p>
+              create one
+            </Link>
+            .
+          </p>
+        ) : (
+          <div className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {events.map((event) => (
+              <article
+                key={event.id}
+                className="overflow-hidden rounded-md border border-[#e6d3c0] bg-white shadow-sm"
+              >
+                {/* Event Thumbnail */}
+                <div className="relative h-45 sm:h-46">
+                  {event.thumbnailUrl ? (
+                    <Image
+                      src={event.thumbnailUrl}
+                      alt={event.title}
+                      height={180}
+                      width={300}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div
+                      className={`flex h-full items-end bg-linear-to-br ${event.color} p-4 text-white`}
+                    >
+                      <p className="text-base font-bold">{event.category}</p>
+                    </div>
+                  )}
                 </div>
 
-                <Link
-                  href={`/upcoming-events/${event.id}`}
-                  className="mt-5 rounded-md bg-[#a63f1c] px-4 py-3 text-center text-base font-bold text-white transition-colors hover:bg-[#8f3215] focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
-                >
-                  View Event
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+                {/* Event Information */}
+                <div className="flex flex-col p-5 sm:p-5.5">
+                  <p className="text-xs font-bold tracking-[0.28em] text-[#b1421c]">
+                    {event.category.toUpperCase()}
+                  </p>
+
+                  <h2 className="mt-4 text-2xl leading-tight font-bold text-[#211b18]">
+                    {event.title}
+                  </h2>
+
+                  <div className="mt-2 text-base leading-6 text-[#695c54]">
+                    <p>{event.location}</p>
+                    <p>{event.date}</p>
+                  </div>
+
+                  <Link
+                    href={`/upcoming-events/${event.id}`}
+                    className="mt-5 rounded-md bg-[#a63f1c] px-4 py-3 text-center text-base font-bold text-white transition-colors hover:bg-[#8f3215] focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+                  >
+                    View Event
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
       </div>
     </main>
   );

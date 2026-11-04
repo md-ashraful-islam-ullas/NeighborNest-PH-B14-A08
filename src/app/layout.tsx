@@ -4,8 +4,9 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const dosis = Dosis({
   subsets: ["latin"],
@@ -19,12 +20,24 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={cn(dosis.className, "font-sans", geist.variable)}>
+    <html
+      lang="en"
+      className={cn(dosis.className, "font-sans", geist.variable)}
+    >
       <body>
-        
         <Navbar />
         {children}
-        
+        <Toaster
+          style={
+            {
+              "--normal-bg": "#ffffff",
+              "--normal-text": "#211b18",
+              "--normal-border": "#e6d3c0",
+              "--success-bg": "#ffffff",
+              "--error-bg": "#ffffff",
+            } as React.CSSProperties
+          }
+        />
         <Footer />
       </body>
     </html>

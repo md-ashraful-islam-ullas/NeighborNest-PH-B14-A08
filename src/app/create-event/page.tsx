@@ -1,7 +1,9 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { toast } from "sonner";
 
 const eventTypes = [
   { label: "Cleanup", className: "bg-[#b8d7f6]" },
@@ -40,14 +42,14 @@ const getToday = () => {
 };
 
 const CreateEventPage = () => {
+  const router = useRouter();
   const [values, setValues] = useState(initialValues);
   const [error, setError] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const updateValue = (field: keyof FormValues, value: string) => {
     setValues((currentValues) => ({ ...currentValues, [field]: value }));
     setError("");
-    setSubmitted(false);
   };
   const { data: session } = authClient.useSession();
   const user = session?.user;
@@ -62,41 +64,44 @@ const CreateEventPage = () => {
       !values.description.trim()
     ) {
       setError("Please complete the required event details before publishing.");
-      setSubmitted(false);
       return;
     }
 
     if (values.date < getToday()) {
       setError("Event date can't be in the past.");
-      setSubmitted(false);
       return;
     }
 
     setError("");
-    setSubmitted(true);
 
-    const res = await fetch(`http://localhost:5000/create-event`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...values,
-        creator: {
-          name: user?.name,
-          email: user?.email,
-        },
-      }),
-    });
+    try {
+      setLoading(true);
 
-    if (!res.ok) {
-      throw new Error("Failed to create event");
+      const res = await fetch("http://localhost:5000/create-event", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...values,
+          creator: {
+            name: user?.name,
+            email: user?.email,
+          },
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create event");
+      }
+
+      toast.success("Event created successfully!");
+      router.push("/upcoming-events");
+      router.refresh();
+    } catch (err) {
+      console.error("Create event error:", err);
+      toast.error("Could not create the event. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    const data = await res.json();
-
-    console.log("Event submitted:", data);
-    console.log("User info:", user);
   };
 
   return (
@@ -223,7 +228,7 @@ const CreateEventPage = () => {
               />
             </label>
             <label htmlFor="thumbnailUrl" className="mt-5 block font-bold">
-              Thumbnail image URL (optional)
+              Thumbnail image URL
               <input
                 id="thumbnailUrl"
                 name="thumbnailUrl"
@@ -243,21 +248,15 @@ const CreateEventPage = () => {
               {error}
             </p>
           ) : null}
-          {submitted ? (
-            <p
-              role="status"
-              className="mt-4 rounded-md bg-[#eef7e7] px-4 py-3 text-sm font-bold text-[#315d2b]"
-            >
-              Your event is ready to share with the neighborhood.
-            </p>
-          ) : null}
-
           <button
             type="submit"
-            className="mt-5 w-full rounded-md bg-[#ad421c] px-5 py-4 text-base font-bold text-white transition-colors hover:bg-[#8f3215] focus-visible:ring-2 focus-visible:ring-[#ad421c] focus-visible:ring-offset-2"
+            disabled={loading}
+            className="mt-5 w-full rounded-md bg-[#ad421c] px-5 py-4 text-base font-bold text-white transition-colors hover:bg-[#8f3215] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-[#ad421c] focus-visible:ring-offset-2"
           >
-            Publish event →
+            {loading ? "Publishing..." : "Publish event →"}
           </button>
+
+          
           <p className="mt-4 text-center text-sm text-[#695c54]">
             Your event appears on the Upcoming Events page right away.
           </p>
