@@ -69,7 +69,7 @@ const EditEvents = ({ events }: { events: FormValues }) => {
       values;
 
     const token = await getTokenFromClient();
-    const res = await fetch(`http://localhost:5000/events/${values._id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${values._id}`, {
       cache: "no-store",
       method: "PATCH",
       headers: {

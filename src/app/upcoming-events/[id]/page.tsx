@@ -50,7 +50,7 @@ function formatDate(date: string) {
 }
 
 async function getEvent(id: string): Promise<ApiEvent> {
-  const response = await fetch(`http://localhost:5000/events/${id}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${id}`, {
     cache: "no-store",
   });
 

@@ -16,13 +16,13 @@ const Profile = async () => {
   const token = await getTokenFromServer();
 
   const [res1, res2] = await Promise.all([
-    fetch(`http://localhost:5000/my-events/${encodeURIComponent(email)}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-events/${encodeURIComponent(email)}`, {
       cache: "no-store",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     }),
-    fetch(`http://localhost:5000/my-joined-events/${encodeURIComponent(email)}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-joined-events/${encodeURIComponent(email)}`, {
       cache: "no-store",
       headers: {
         Authorization: `Bearer ${token}`,

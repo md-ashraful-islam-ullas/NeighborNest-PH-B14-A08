@@ -34,7 +34,7 @@ const DeleteEvent = ({ event }: { event: ApiEvent }) => {
 
     const handleDeleteEvent = async () => {
         const token = await getTokenFromClient();
-        const res = await fetch(`http://localhost:5000/events/${event._id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${event._id}`, {
             method: "DELETE",
             headers: {
                 authorization: `Bearer ${token}`,

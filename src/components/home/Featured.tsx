@@ -35,7 +35,7 @@ const getCategoryStyle = (eventType: string) => {
 };
 
 const getFeaturedEvents = async (): Promise<FeaturedEvent[]> => {
-  const res = await fetch(`http://localhost:5000/featured-events`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/featured-events`, {
     cache: "no-store",
   });
 

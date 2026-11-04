@@ -63,7 +63,7 @@ function formatDate(date: string) {
 }
 
 async function getEvents(): Promise<EventCard[]> {
-  const response = await fetch("http://localhost:5000/events", {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
     cache: "no-store",
   });
 

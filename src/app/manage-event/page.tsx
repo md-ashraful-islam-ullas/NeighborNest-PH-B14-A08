@@ -58,7 +58,7 @@ function formatDate(date: string) {
 async function getMyEvents(email: string): Promise<ApiEvent[]> {
   const token = await getTokenFromServer();
   const response = await fetch(
-    `http://localhost:5000/my-events/${encodeURIComponent(email)}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/my-events/${encodeURIComponent(email)}`,
     { cache: "no-store", headers: { authorization: `Bearer ${token}` } },
   );
 

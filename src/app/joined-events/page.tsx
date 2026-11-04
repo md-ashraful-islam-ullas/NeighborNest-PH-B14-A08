@@ -51,7 +51,7 @@ function formatDate(date: string) {
 async function getJoinedEvents(email: string): Promise<ApiEvent[]> {
   const token = await getTokenFromServer();
   const response = await fetch(
-    `http://localhost:5000/my-joined-events/${encodeURIComponent(email)}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/my-joined-events/${encodeURIComponent(email)}`,
     {
       cache: "no-store",
       headers: {
