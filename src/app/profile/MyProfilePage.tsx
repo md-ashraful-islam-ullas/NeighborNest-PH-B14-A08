@@ -33,19 +33,16 @@ type ProfileUser = {
 };
 
 const inputClassName =
-  "mt-2 h-12 w-full rounded-md border border-[#ead6c3] bg-background px-3 text-base text-foreground outline-none transition placeholder:text-[#81746c] focus:border-[#a63f1c] focus:ring-2 focus:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-70";
+  "mt-2 h-12 w-full rounded-md border border-input bg-background px-3 text-base text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-70";
 
 const MyProfilePage = ({ manageEvents, joinedEvents }: Props) => {
   const { data: session, isPending, refetch } = authClient.useSession();
   const user = session?.user;
 
-  console.log('manageEvents:', manageEvents);
-  console.log('joinedEvents:', joinedEvents);
-
   if (isPending) {
     return (
       <main className="min-h-[calc(100vh-7rem)] bg-background px-5 py-10 sm:px-8 lg:px-10">
-        <div className="mx-auto h-120 w-full max-w-300 animate-pulse rounded-2xl bg-[#f2dfcc]" />
+        <div className="mx-auto h-120 w-full max-w-300 animate-pulse rounded-2xl bg-muted" />
       </main>
     );
   }
@@ -120,24 +117,22 @@ const ProfileContent = ({
   return (
     <main className="min-h-[calc(100vh-7rem)] bg-background px-5 py-8 sm:px-8 sm:py-12 lg:px-10 lg:py-16">
       <div className="mx-auto grid w-full max-w-300 gap-6 lg:grid-cols-[0.94fr_1.35fr] lg:gap-9">
-        <section className="relative isolate min-h-120 overflow-hidden rounded-2xl bg-[#a63f1c] px-9 py-10 text-primary-foreground sm:px-10 sm:py-12 lg:min-h-130 lg:px-9 lg:py-10">
+        <section className="relative isolate min-h-120 overflow-hidden rounded-2xl bg-[#a63f1c] px-9 py-10 text-white sm:px-10 sm:py-12 lg:min-h-130 lg:px-9 lg:py-10">
           <div className="pointer-events-none absolute -top-20 -right-20 -z-10 size-64 rounded-full border-9 border-[#d77c53]/70 sm:-right-16" />
 
           <Avatar size="lg" className="size-23 after:hidden sm:size-24">
             <AvatarImage src={user.image || ""} alt={user.name || "User"} />
-            <AvatarFallback className="bg-card text-4xl font-bold text-[#ad421b]">
+            <AvatarFallback className="bg-white text-4xl font-bold text-[#ad421b]">
               {initials}
             </AvatarFallback>
           </Avatar>
 
           <h1 className="mt-5 text-4xl leading-none font-bold">{user.name}</h1>
-          <p className="mt-2 text-base text-primary-foreground/95">
-            {user.email}
-          </p>
+          <p className="mt-2 text-base text-white/95">{user.email}</p>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:gap-4">
             <div className="rounded-xl bg-[#c26645] px-4 py-4 text-white">
-              <p style={{ color: "white", fontSize: "40px", fontWeight: 900 }}>
+              <p className="text-[40px] leading-tight font-black text-white">
                 {manageEvents?.length ?? "N/A"}
               </p>
               <p className="mt-1 text-sm font-medium text-white">
@@ -146,7 +141,7 @@ const ProfileContent = ({
             </div>
 
             <div className="rounded-xl bg-[#c26645] px-4 py-4 text-white">
-              <p style={{ color: "white", fontSize: "40px", fontWeight: 900 }}>
+              <p className="text-[40px] leading-tight font-black text-white">
                 {joinedEvents?.length ?? "N/A"}
               </p>
               <p className="mt-1 text-sm font-medium text-white">
@@ -227,8 +222,8 @@ const ProfileContent = ({
                 role="status"
                 className={
                   feedback.type === "success"
-                    ? "text-sm font-semibold text-green-700"
-                    : "text-sm font-semibold text-red-700"
+                    ? "text-sm font-semibold text-green-700 dark:text-green-400"
+                    : "text-sm font-semibold text-destructive"
                 }
               >
                 {feedback.message}
@@ -238,7 +233,7 @@ const ProfileContent = ({
             <button
               type="submit"
               disabled={isSaving}
-              className="flex h-13 w-full items-center justify-center rounded-md bg-[#b1421c] px-4 py-3 text-base font-bold text-primary-foreground transition-colors hover:bg-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70"
+              className="flex h-13 w-full items-center justify-center rounded-md bg-primary px-4 py-3 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isSaving ? "Saving..." : "Save changes"}
             </button>

@@ -18,11 +18,13 @@ type FeaturedEvent = {
   thumbnailUrl: string;
 };
 
+// Pastel background + a darker shade of the same color for the text,
+// so labels stay readable in both light and dark themes.
 const categories = [
-  { label: "Donation", className: "bg-[#f9c873]" },
-  { label: "Plantation", className: "bg-[#b8d98d]" },
-  { label: "Cleanup", className: "bg-[#a9cbed]" },
-  { label: "Education", className: "bg-[#f5bbaa]" },
+  { label: "Donation", className: "bg-[#f9c873] text-[#412402]" },
+  { label: "Plantation", className: "bg-[#b8d98d] text-[#173404]" },
+  { label: "Cleanup", className: "bg-[#a9cbed] text-[#042c53]" },
+  { label: "Education", className: "bg-[#f5bbaa] text-[#4a1b0c]" },
 ];
 
 const getCategoryStyle = (eventType: string) => {
@@ -59,7 +61,7 @@ const Featured = async () => {
   const events = await getFeaturedEvents();
 
   return (
-    <section className="bg-[#fff7ed] px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+    <section className="bg-background px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
       <div className="mx-auto max-w-300">
         <p className="text-xs font-bold tracking-[0.3em] text-primary sm:text-sm">
           FEATURED EVENTS
@@ -73,21 +75,22 @@ const Featured = async () => {
           className="mt-8"
         >
           <div className="mb-5 hidden justify-end gap-3 sm:flex">
-            <CarouselPrevious className="static size-12 translate-y-0 rounded-full border-[#e6d9cd] bg-card text-foreground shadow-none" />
-            <CarouselNext className="static size-12 translate-y-0 rounded-full border-[#e6d9cd] bg-card text-foreground shadow-none" />
+            <CarouselPrevious className="static size-12 translate-y-0 rounded-full border-border bg-card text-foreground shadow-none" />
+            <CarouselNext className="static size-12 translate-y-0 rounded-full border-border bg-card text-foreground shadow-none" />
           </div>
 
           <CarouselContent className="-ml-4">
             {events.map((event) => {
               const { day, month } = formatDate(event.date);
+              const category = getCategoryStyle(event.eventType);
 
               return (
                 <CarouselItem
                   key={event._id}
                   className="basis-full pl-4 md:basis-1/2 lg:basis-1/3"
                 >
-                  <article className="overflow-hidden rounded-xl border border-[#e6d9cd] bg-card shadow-sm">
-                    <div className="relative h-44 overflow-hidden bg-[#d7c6b8] sm:h-48">
+                  <article className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+                    <div className="relative h-44 overflow-hidden bg-muted sm:h-48">
                       <Image
                         src={event.thumbnailUrl}
                         alt={event.title}
@@ -96,11 +99,9 @@ const Featured = async () => {
                         className="object-cover"
                       />
                       <span
-                        className={`absolute left-4 top-4 rounded-md px-3 py-2 text-xs font-bold backdrop-blur-sm ${
-                          getCategoryStyle(event.eventType).className
-                        }`}
+                        className={`absolute left-4 top-4 rounded-md px-3 py-2 text-xs font-bold backdrop-blur-sm ${category.className}`}
                       >
-                        {getCategoryStyle(event.eventType).label}
+                        {category.label}
                       </span>
                       <span className="absolute right-4 top-4 flex min-w-12 flex-col items-center rounded-xl bg-card px-2 py-2 text-foreground">
                         <strong className="text-xl leading-none">{day}</strong>
@@ -114,12 +115,12 @@ const Featured = async () => {
                       <h3 className="text-xl leading-tight font-bold text-foreground">
                         {event.title}
                       </h3>
-                      <p className="mt-2 text-sm text-[#5b4b42]">
+                      <p className="mt-2 text-sm text-muted-foreground">
                         {event.location}
                       </p>
                       <Link
                         href={`/upcoming-events/${event._id}`}
-                        className="mt-5 flex min-h-12 items-center justify-center rounded-md bg-[#b1421c] px-4 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
+                        className="mt-5 flex min-h-12 items-center justify-center rounded-md bg-primary px-4 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
                       >
                         View Event
                       </Link>
@@ -131,14 +132,14 @@ const Featured = async () => {
           </CarouselContent>
 
           <div className="mt-5 flex justify-center gap-3 sm:hidden">
-            <CarouselPrevious className="static size-10 translate-y-0 rounded-full border-[#e6d9cd] bg-card text-foreground shadow-none" />
-            <CarouselNext className="static size-10 translate-y-0 rounded-full border-[#e6d9cd] bg-card text-foreground shadow-none" />
+            <CarouselPrevious className="static size-10 translate-y-0 rounded-full border-border bg-card text-foreground shadow-none" />
+            <CarouselNext className="static size-10 translate-y-0 rounded-full border-border bg-card text-foreground shadow-none" />
           </div>
         </Carousel>
 
         <Link
           href="/upcoming-events"
-          className="mt-10 block text-center text-sm font-bold text-primary transition-colors hover:text-[#913716] focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
+          className="mt-10 block text-center text-sm font-bold text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
         >
           See all upcoming events →
         </Link>

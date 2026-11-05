@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
@@ -17,17 +16,22 @@ type ApiEvent = {
   description: string;
 };
 
+// Pastel background + a darker shade of the same color for the text,
+// so the labels stay readable in both light and dark themes.
 const categoryStyles: Record<string, { background: string; text: string }> = {
-  Donation: { background: "bg-[#ffc96f]", text: "text-foreground" },
-  Plantation: { background: "bg-[#b9db8d]", text: "text-foreground" },
-  Cleanup: { background: "bg-[#b8d7f6]", text: "text-foreground" },
-  Education: { background: "bg-[#f0c0af]", text: "text-foreground" },
+  Donation: { background: "bg-[#ffc96f]", text: "text-[#412402]" },
+  Plantation: { background: "bg-[#b9db8d]", text: "text-[#173404]" },
+  Cleanup: { background: "bg-[#b8d7f6]", text: "text-[#042c53]" },
+  Education: { background: "bg-[#f0c0af]", text: "text-[#4a1b0c]" },
 };
 
 const fallbackCategoryStyle = {
-  background: "bg-[#ead6c3]",
+  background: "bg-muted",
   text: "text-foreground",
 };
+
+const getCategoryStyle = (eventType: string) =>
+  categoryStyles[eventType] ?? fallbackCategoryStyle;
 
 function isApiEvent(value: unknown): value is ApiEvent {
   if (!value || typeof value !== "object") {
@@ -82,8 +86,7 @@ async function getMyEvents(email: string): Promise<ApiEvent[]> {
 }
 
 function EventThumbnail({ event }: { event: ApiEvent }) {
-  const categoryStyle =
-    categoryStyles[event.eventType] ?? fallbackCategoryStyle;
+  const categoryStyle = getCategoryStyle(event.eventType);
 
   if (event.thumbnailUrl) {
     return (
@@ -121,7 +124,7 @@ export default async function ManageMyEventsPage() {
   const events = await getMyEvents(session.user.email);
 
   return (
-    <main className="bg-[#fff7ed] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
+    <main className="bg-background px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
       <div className="mx-auto max-w-300">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -135,7 +138,7 @@ export default async function ManageMyEventsPage() {
 
           <Link
             href="/create-event"
-            className="inline-flex w-fit items-center justify-center rounded-md bg-[#ad421c] px-5 py-3 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+            className="inline-flex w-fit items-center justify-center rounded-md bg-primary px-5 py-3 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-ring/30 focus-visible:outline-none"
           >
             + New event
           </Link>
@@ -143,46 +146,44 @@ export default async function ManageMyEventsPage() {
 
         {events.length > 0 ? (
           <div className="mt-8 space-y-4 sm:mt-9">
-            {events.map((event) => (
-              <article
-                key={event._id}
-                className="flex flex-col gap-5 rounded-md border border-border bg-card p-5 shadow-sm sm:flex-row sm:items-center sm:gap-6 sm:px-5 sm:py-6"
-              >
-                <EventThumbnail event={event} />
+            {events.map((event) => {
+              const categoryStyle = getCategoryStyle(event.eventType);
 
-                <div className="min-w-0 flex-1">
-                  <h2 className="truncate text-lg font-bold text-foreground sm:text-xl">
-                    {event.title}
-                  </h2>
-                  <p className="mt-1 text-sm text-muted-foreground sm:text-base">
-                    {event.location} · {formatDate(event.date)}
-                  </p>
-                  <span
-                    className={`mt-3 inline-flex rounded-md px-3 py-1 text-xs font-bold ${
-                      (categoryStyles[event.eventType] ?? fallbackCategoryStyle)
-                        .background
-                    } ${
-                      (categoryStyles[event.eventType] ?? fallbackCategoryStyle)
-                        .text
-                    }`}
-                  >
-                    {event.eventType}
-                  </span>
-                </div>
+              return (
+                <article
+                  key={event._id}
+                  className="flex flex-col gap-5 rounded-md border border-border bg-card p-5 shadow-sm sm:flex-row sm:items-center sm:gap-6 sm:px-5 sm:py-6"
+                >
+                  <EventThumbnail event={event} />
 
-                <div className="flex flex-wrap gap-3 sm:shrink-0">
-                  <Link
-                    href={`/upcoming-events/${event._id}`}
-                    className="rounded-md border border-[#ad421c] px-4 py-2.5 text-sm font-bold text-[#ad421c] transition-colors hover:bg-[#fff1e5] focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
-                  >
-                    View
-                  </Link>
-                  <EditEvents events={event} />
-                  
-                  <DeleteEvent event={event} />
-                </div>
-              </article>
-            ))}
+                  <div className="min-w-0 flex-1">
+                    <h2 className="truncate text-lg font-bold text-foreground sm:text-xl">
+                      {event.title}
+                    </h2>
+                    <p className="mt-1 text-sm text-muted-foreground sm:text-base">
+                      {event.location} · {formatDate(event.date)}
+                    </p>
+                    <span
+                      className={`mt-3 inline-flex rounded-md px-3 py-1 text-xs font-bold ${categoryStyle.background} ${categoryStyle.text}`}
+                    >
+                      {event.eventType}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-3 sm:shrink-0">
+                    <Link
+                      href={`/upcoming-events/${event._id}`}
+                      className="rounded-md border border-primary px-4 py-2.5 text-sm font-bold text-primary transition-colors hover:bg-accent focus-visible:ring-4 focus-visible:ring-ring/30 focus-visible:outline-none"
+                    >
+                      View
+                    </Link>
+                    <EditEvents events={event} />
+
+                    <DeleteEvent event={event} />
+                  </div>
+                </article>
+              );
+            })}
           </div>
         ) : (
           <div className="mt-8 rounded-md border border-border bg-card p-6 text-center shadow-sm sm:mt-9 sm:p-10">
@@ -192,7 +193,7 @@ export default async function ManageMyEventsPage() {
             </p>
             <Link
               href="/create-event"
-              className="mt-5 inline-flex rounded-md bg-[#ad421c] px-5 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-[#b1421c]/30 focus-visible:outline-none"
+              className="mt-5 inline-flex rounded-md bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-ring/30 focus-visible:outline-none"
             >
               Create your first event
             </Link>

@@ -88,7 +88,7 @@ export default async function JoinedEventPage() {
   const events = await getJoinedEvents(session.user.email);
 
   return (
-    <main className="bg-[#fff7ed] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
+    <main className="bg-background px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
       <div className="mx-auto max-w-300">
         <h1 className="text-4xl leading-tight font-bold tracking-tight text-foreground sm:text-5xl">
           Events you joined

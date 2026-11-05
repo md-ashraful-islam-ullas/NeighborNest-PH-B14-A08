@@ -5,6 +5,7 @@ import { authClient } from "@/lib/auth-client";
 import getTokenFromClient from "@/lib/getTokenFromClient";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type ApiEvent = {
   _id: string;
@@ -29,6 +30,7 @@ const JoinEventButtonCard = ({ event }: { event: ApiEvent }) => {
 
   const [joined, setJoined] = useState(false);
   const [loading, setLoading] = useState(false);
+  
 
   const handleJoinEvent = async () => {
     if (!user) {
@@ -55,12 +57,13 @@ const JoinEventButtonCard = ({ event }: { event: ApiEvent }) => {
       });
 
       if (!res.ok) {
-        throw new Error("Failed to join event");
+        toast.error("Couldn't join. You may have already joined this event.");
       }
 
       const joinEventResponse = await res.json();
 
       setJoined(true);
+      toast.success("You joined this event!");
     } catch (error) {
       console.error(error);
     } finally {

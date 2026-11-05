@@ -8,7 +8,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const inputClassName =
-  "mt-2 h-12 w-full rounded-md border border-[#ead6c3] bg-background px-3 text-base text-foreground outline-none transition placeholder:text-[#81746c] focus:border-[#a63f1c] focus:ring-2 focus:ring-ring/20";
+  "mt-2 h-12 w-full rounded-md border border-input bg-background px-3 text-base text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-ring/20";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -83,7 +83,7 @@ export default function SignInPage() {
           <h1 className="mt-9 max-w-md text-4xl leading-[1.05] font-bold sm:text-5xl">
             Good to see you again.
           </h1>
-          <p className="mt-3 max-w-md text-base leading-7 text-primary-foreground/95 sm:text-lg">
+          <p className="mt-3 max-w-md text-base leading-7 text-white/95 sm:text-lg">
             Your events and the people you help are waiting.
           </p>
 
@@ -143,7 +143,7 @@ export default function SignInPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-6 flex h-13 w-full items-center justify-center rounded-md bg-[#b1421c] px-4 text-base font-bold text-white transition-colors hover:bg-[#913716] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
+              className="mt-6 flex h-13 w-full items-center justify-center rounded-md bg-primary px-4 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>
@@ -153,15 +153,15 @@ export default function SignInPage() {
             </p>
 
             <div className="my-5 flex items-center gap-3 text-sm text-muted-foreground">
-              <span className="h-px flex-1 bg-[#e6d3c0]" />
+              <span className="h-px flex-1 bg-border" />
               <span>or</span>
-              <span className="h-px flex-1 bg-[#e6d3c0]" />
+              <span className="h-px flex-1 bg-border" />
             </div>
 
             <button
               onClick={handleGoogleSignIn}
               type="button"
-              className="flex h-13 w-full items-center justify-center gap-2 rounded-md border border-[#b1421c] px-4 text-base font-bold text-primary transition-colors hover:bg-[#fff1e5] focus-visible:ring-4 focus-visible:ring-[#b1421c]/20 focus-visible:outline-none"
+              className="flex h-13 w-full items-center justify-center gap-2 rounded-md border border-primary px-4 text-base font-bold text-primary transition-colors hover:bg-accent focus-visible:ring-4 focus-visible:ring-ring/20 focus-visible:outline-none"
             >
               <span className="text-xl leading-none" aria-hidden="true">
                 G
@@ -173,7 +173,7 @@ export default function SignInPage() {
               New here?{" "}
               <Link
                 href="/sign-up"
-                className="font-bold text-[#a63f1c] hover:text-[#8f3215] focus-visible:outline-none focus-visible:underline"
+                className="font-bold text-primary hover:text-primary/80 focus-visible:outline-none focus-visible:underline"
               >
                 Create an account
               </Link>

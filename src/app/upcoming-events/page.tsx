@@ -93,7 +93,7 @@ export default async function AllEventsPage() {
   const events = await getEvents();
 
   return (
-    <main className="bg-[#fff7ed] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
+    <main className="bg-background px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
       <div className="mx-auto max-w-300">
         <p className="text-xs font-bold tracking-[0.3em] text-primary sm:text-sm">
           UPCOMING EVENTS

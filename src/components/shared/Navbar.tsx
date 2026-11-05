@@ -76,12 +76,22 @@ const Navbar = () => {
             priority
           />
 
+          {/* Light theme: dark text */}
           <Image
             src="/neighbor-nest-text-light.png"
             alt="Neighbor Nest"
             width={154}
             height={36}
-            className="h-auto w-36 sm:w-40"
+            className="h-auto w-36 sm:w-40 dark:hidden"
+            priority
+          />
+          {/* Dark theme: cream text */}
+          <Image
+            src="/neighbor-nest-text-dark.png"
+            alt="Neighbor Nest"
+            width={154}
+            height={36}
+            className="hidden h-auto w-36 sm:w-40 dark:block"
             priority
           />
         </Link>
@@ -113,7 +123,7 @@ const Navbar = () => {
                 render={
                   <button
                     type="button"
-                    className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     aria-label="Open user menu"
                   >
                     <Avatar size="lg">
@@ -180,10 +190,7 @@ const Navbar = () => {
                 <DropdownMenuItem
                   className={dropdownItemClass}
                   closeOnClick={false}
-                  onClick={() => {
-                    console.log("clicked, current:", resolvedTheme);
-                    setTheme(isDark ? "light" : "dark");
-                  }}
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
                 >
                   {isDark ? (
                     <SunIcon className="size-4 text-primary" />

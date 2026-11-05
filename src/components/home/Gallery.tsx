@@ -2,11 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Gallery = () => {
+  // Pastel background + a darker shade of the same color for the text,
+  // so the chips stay readable in both light and dark themes.
   const categories = [
-    { label: "Donation", className: "bg-[#f9c873]" },
-    { label: "Plantation", className: "bg-[#b8d98d]" },
-    { label: "Cleanup", className: "bg-[#a9cbed]" },
-    { label: "Education", className: "bg-[#f5bbaa]" },
+    { label: "Donation", className: "bg-[#f9c873] text-[#412402]" },
+    { label: "Plantation", className: "bg-[#b8d98d] text-[#173404]" },
+    { label: "Cleanup", className: "bg-[#a9cbed] text-[#042c53]" },
+    { label: "Education", className: "bg-[#f5bbaa] text-[#4a1b0c]" },
   ];
 
   const events = [
@@ -61,7 +63,7 @@ const Gallery = () => {
   ];
 
   return (
-    <section className="bg-card px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+    <section className="bg-background px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
       <div className="mx-auto max-w-300">
         <p className="text-xs font-bold tracking-[0.3em] text-primary sm:text-sm">
           GALLERY
@@ -69,7 +71,7 @@ const Gallery = () => {
         <h2 className="mt-5 max-w-150 text-4xl leading-tight font-bold tracking-tight text-foreground sm:text-5xl">
           Moments from our streets.
         </h2>
-        <p className="mt-5 text-base text-[#5b4b42] sm:text-lg">
+        <p className="mt-5 text-base text-muted-foreground sm:text-lg">
           Real people, real neighborhoods, one good turn at a time.
         </p>
 
@@ -80,7 +82,7 @@ const Gallery = () => {
           {categories.map((category) => (
             <span
               key={category.label}
-              className={`${category.className} rounded-md px-3.5 py-2 text-xs font-bold text-foreground`}
+              className={`${category.className} rounded-md px-3.5 py-2 text-xs font-bold`}
             >
               {category.label}
             </span>
@@ -93,7 +95,7 @@ const Gallery = () => {
               key={event.title}
               href="#"
               aria-label={`${event.title} in ${event.location}`}
-              className="group relative isolate flex min-h-52 overflow-hidden rounded-lg bg-[#d7c6b8] text-primary-foreground shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-[#b1421c]/40 focus-visible:outline-none"
+              className="group relative isolate flex min-h-52 overflow-hidden rounded-lg bg-muted text-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-ring/40 focus-visible:outline-none"
             >
               <Image
                 src={event.image}
@@ -108,7 +110,7 @@ const Gallery = () => {
                   <h3 className="text-xl leading-tight font-bold">
                     {event.title}
                   </h3>
-                  <p className="mt-1 text-sm font-medium text-primary-foreground/90">
+                  <p className="mt-1 text-sm font-medium text-white/90">
                     {event.location}
                   </p>
                 </div>

@@ -80,7 +80,7 @@ export default async function EventsDetailsPage({
       <div className="mx-auto max-w-275">
         <Link
           href="/upcoming-events"
-          className="inline-flex items-center gap-1 text-base font-bold text-[#a63f1c] transition-colors hover:text-[#8f3215] focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
+          className="inline-flex items-center gap-1 text-base font-bold text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
         >
           <span aria-hidden="true">←</span>
           All events
@@ -102,7 +102,7 @@ export default async function EventsDetailsPage({
                 <span className="inline-flex rounded-md bg-card/75 px-3.5 py-2 text-sm font-bold text-foreground backdrop-blur-sm">
                   {event.eventType}
                 </span>
-                <h1 className="mt-5 max-w-180 text-4xl leading-[1.05] font-bold text-primary-foreground sm:text-5xl lg:text-5xl">
+                <h1 className="mt-5 max-w-180 text-4xl leading-[1.05] font-bold text-white sm:text-5xl lg:text-5xl">
                   {event.title}
                 </h1>
               </div>
@@ -130,7 +130,7 @@ export default async function EventsDetailsPage({
                 <h2 className="text-3xl leading-tight font-bold">
                   About this event
                 </h2>
-                <p className="mt-2 max-w-180 text-base leading-7 text-[#3d332e]">
+                <p className="mt-2 max-w-180 text-base leading-7 text-foreground/80">
                   {event.description}
                 </p>
               </section>
@@ -139,7 +139,7 @@ export default async function EventsDetailsPage({
                 <h2 className="text-3xl leading-tight font-bold">
                   How it works
                 </h2>
-                <ol className="mt-2 list-decimal space-y-2 pl-5 text-base leading-7 text-[#3d332e]">
+                <ol className="mt-2 list-decimal space-y-2 pl-5 text-base leading-7 text-foreground/80">
                   <li>Press Join Event, and log in if asked.</li>
                   <li>Show up at the place and time above.</li>
                   <li>Find this event later under Joined Events.</li>
